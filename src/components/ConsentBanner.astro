@@ -2,19 +2,26 @@
 ---
 <div
   id="zow-consent-banner"
-  class="fixed inset-x-0 bottom-0 z-50 hidden border-t border-border bg-bg-raised/95 backdrop-blur px-4 py-5 sm:px-6"
+  class="fixed inset-x-0 bottom-0 z-50 hidden border-t border-border bg-bg/95 backdrop-blur px-4 py-5 shadow-[0_-4px_24px_rgba(0,0,0,0.08)] sm:px-6"
   role="region"
   aria-label="Cookie consent"
 >
   <div class="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
-    <div class="max-w-2xl text-sm text-text-muted">
-      <p>
-        We use essential cookies to run this site and optional analytics cookies to understand how it's used.
-        Lab and mission activity is never sent to marketing analytics. Read our
-        <a href="/privacy" class="text-accent underline underline-offset-2">Privacy Policy</a>.
-      </p>
+    <div class="flex max-w-2xl items-start gap-3">
+      <svg class="mt-0.5 h-5 w-5 shrink-0 text-accent" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <rect x="3" y="7" width="10" height="7" rx="1.5" stroke="currentColor" stroke-width="1.3" />
+        <path d="M5 7V4.5a3 3 0 0 1 6 0V7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" />
+      </svg>
+      <div>
+        <p class="text-sm font-semibold text-text">We value your privacy</p>
+        <p class="mt-1 text-sm text-text-muted">
+          We use essential cookies to run this site and optional analytics cookies to understand how it's used.
+          Lab and mission activity is never sent to marketing analytics.
+          <a href="/privacy#cookies" class="text-accent underline underline-offset-2">Cookie Policy</a>.
+        </p>
+      </div>
     </div>
-    <div class="flex flex-wrap items-center gap-3">
+    <div class="flex flex-wrap items-center gap-3 pl-8 md:pl-0">
       <button
         id="zow-consent-customize"
         type="button"
@@ -27,43 +34,77 @@
         type="button"
         class="rounded-md border border-border px-4 py-2 text-sm font-medium text-text hover:bg-surface-hover"
       >
-        Reject non-essential
+        Reject All
       </button>
       <button
         id="zow-consent-accept"
         type="button"
         class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-white hover:bg-accent-strong"
       >
-        Accept all
+        Accept All
       </button>
     </div>
   </div>
+</div>
 
-  <div id="zow-consent-preferences" class="mx-auto mt-4 hidden max-w-6xl border-t border-border pt-4">
-    <div class="flex items-start justify-between gap-4 sm:items-center">
-      <div>
-        <p class="text-sm font-medium text-text">Analytics cookies</p>
-        <p class="text-sm text-text-muted">Help us understand which pages and missions are useful. Off by default.</p>
-      </div>
-      <label class="relative inline-flex shrink-0 cursor-pointer items-center">
-        <input id="zow-consent-analytics-toggle" type="checkbox" class="peer sr-only" />
-        <span
-          class="h-6 w-11 rounded-full bg-surface-hover transition-colors peer-checked:bg-accent peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent peer-focus-visible:outline-offset-2"
-        ></span>
-        <span
-          class="absolute left-1 h-4 w-4 rounded-full bg-text transition-transform peer-checked:translate-x-5"
-        ></span>
-      </label>
-    </div>
-    <div class="mt-4 flex justify-end">
-      <button
-        id="zow-consent-save"
-        type="button"
-        class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-white hover:bg-accent-strong"
-      >
-        Save preferences
+<div id="zow-consent-modal-backdrop" class="fixed inset-0 z-[60] hidden bg-black/50 backdrop-blur-sm"></div>
+<div
+  id="zow-consent-modal"
+  class="fixed inset-0 z-[70] hidden items-center justify-center p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="zow-consent-modal-title"
+>
+  <div class="w-full max-w-md rounded-md border border-border bg-bg p-6 shadow-2xl">
+    <div class="flex items-start justify-between">
+      <h2 id="zow-consent-modal-title" class="text-base font-semibold text-text">Customize</h2>
+      <button id="zow-consent-modal-close" type="button" aria-label="Close" class="text-text-faint hover:text-text">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" stroke-width="1.5" />
+        </svg>
       </button>
     </div>
+    <p class="mt-3 text-sm leading-relaxed text-text-muted">
+      We use cookies to run this site and, only with your permission, to understand how it's used. Lab and mission
+      activity is never sent to marketing analytics — ZoneOfWar does not use marketing or advertising cookies.
+    </p>
+
+    <div class="mt-5 space-y-4">
+      <div class="rounded-md border border-border p-4">
+        <div class="flex items-center justify-between gap-4">
+          <p class="text-sm font-medium text-text">Necessary</p>
+          <span class="rounded-full border border-border px-2 py-0.5 text-[11px] font-medium text-text-faint">Always on</span>
+        </div>
+        <p class="mt-1.5 text-sm text-text-muted">Essential cookies required for the site to function. These cannot be disabled.</p>
+      </div>
+
+      <div class="rounded-md border border-border p-4">
+        <div class="flex items-center justify-between gap-4">
+          <p class="text-sm font-medium text-text">Analytics</p>
+          <label class="relative inline-flex shrink-0 cursor-pointer items-center">
+            <input id="zow-consent-analytics-toggle" type="checkbox" class="peer sr-only" />
+            <span
+              class="h-6 w-11 rounded-full bg-surface-hover transition-colors peer-checked:bg-accent peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent peer-focus-visible:outline-offset-2"
+            ></span>
+            <span class="absolute left-1 h-4 w-4 rounded-full bg-white transition-transform peer-checked:translate-x-5"></span>
+          </label>
+        </div>
+        <p class="mt-1.5 text-sm text-text-muted">Helps us understand which pages and missions are useful. Off by default.</p>
+      </div>
+    </div>
+
+    <div class="mt-5 flex items-center gap-4 text-xs">
+      <a href="/privacy#cookies" class="text-accent underline underline-offset-2">Cookie Policy</a>
+      <a href="/privacy" class="text-accent underline underline-offset-2">Privacy Policy</a>
+    </div>
+
+    <button
+      id="zow-consent-save"
+      type="button"
+      class="mt-5 w-full rounded-md bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-accent-strong"
+    >
+      Save Preferences
+    </button>
   </div>
 </div>
 
@@ -72,7 +113,8 @@
   const VERSION = 1;
 
   const banner = document.getElementById('zow-consent-banner');
-  const prefsPanel = document.getElementById('zow-consent-preferences');
+  const modal = document.getElementById('zow-consent-modal');
+  const modalBackdrop = document.getElementById('zow-consent-modal-backdrop');
   const analyticsToggle = document.getElementById('zow-consent-analytics-toggle') as HTMLInputElement | null;
 
   function getConsent() {
@@ -89,6 +131,20 @@
     localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
     document.dispatchEvent(new CustomEvent('zow:consent', { detail: consent }));
     banner?.classList.add('hidden');
+    closeModal();
+  }
+
+  function openModal() {
+    if (analyticsToggle) analyticsToggle.checked = Boolean(getConsent()?.analytics);
+    modal?.classList.remove('hidden');
+    modal?.classList.add('flex');
+    modalBackdrop?.classList.remove('hidden');
+  }
+
+  function closeModal() {
+    modal?.classList.add('hidden');
+    modal?.classList.remove('flex');
+    modalBackdrop?.classList.add('hidden');
   }
 
   if (!getConsent() && banner) {
@@ -97,8 +153,11 @@
 
   document.getElementById('zow-consent-accept')?.addEventListener('click', () => saveConsent(true));
   document.getElementById('zow-consent-reject')?.addEventListener('click', () => saveConsent(false));
-  document.getElementById('zow-consent-customize')?.addEventListener('click', () => {
-    prefsPanel?.classList.toggle('hidden');
+  document.getElementById('zow-consent-customize')?.addEventListener('click', openModal);
+  document.getElementById('zow-consent-modal-close')?.addEventListener('click', closeModal);
+  modalBackdrop?.addEventListener('click', closeModal);
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModal();
   });
   document.getElementById('zow-consent-save')?.addEventListener('click', () => {
     saveConsent(Boolean(analyticsToggle?.checked));
