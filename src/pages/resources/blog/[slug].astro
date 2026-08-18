@@ -35,7 +35,7 @@ const breadcrumbs = [
   { name: post.data.title, href: `/resources/blog/${post.id}` },
 ];
 ---
-<BaseLayout title={post.data.title} description={post.data.seoDescription} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
+<BaseLayout title={post.data.seoTitle ?? post.data.title} description={post.data.seoDescription} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
   <Section containerClass="max-w-3xl">
     <Badge variant={post.data.category === 'research' ? 'defense' : 'neutral'}>{post.data.category}</Badge>
     <h1 class="mt-4 text-3xl font-bold text-text sm:text-4xl">{post.data.title}</h1>

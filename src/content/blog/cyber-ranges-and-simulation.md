@@ -1,5 +1,6 @@
 ---
 title: "Why Cyber Ranges Beat Slide Decks for Drone Security Training"
+seoTitle: "Why Cyber Ranges Beat Slide Decks"
 author: "Mohamed Alasad"
 publishedAt: 2026-03-30
 summary: "Why persistent, scored cyber-range missions build UAS security skills faster than lecture-based courses alone."

@@ -1,5 +1,6 @@
 ---
 title: "Drone Architecture and Trust Boundaries: A Practical Map"
+seoTitle: "Drone Architecture and Trust Boundaries"
 author: "Ben Ottoman"
 publishedAt: 2026-01-14
 summary: "A practical map of where trust is assumed versus verified across a typical UAS, from flight controller to cloud."

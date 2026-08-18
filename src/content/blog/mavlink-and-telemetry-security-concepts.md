@@ -1,5 +1,6 @@
 ---
 title: "MAVLink and Telemetry Security: Core Concepts for Defenders"
+seoTitle: "MAVLink & Telemetry Security for Defenders"
 author: "Dr. Tenager Mekonnen"
 publishedAt: 2026-02-25
 summary: "The core concepts defenders need to reason about MAVLink and similar command-and-telemetry protocols, without a single exploit recipe."

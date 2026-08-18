@@ -1,5 +1,6 @@
 ---
 title: "Resilience, Not Just Security: Designing UAS to Fail Safely"
+seoTitle: "Designing UAS to Fail Safely"
 author: "Ben Ottoman"
 publishedAt: 2026-05-05
 summary: "Why resilient mission design — not just prevention — is the right frame for cyber-physical autonomous systems."
