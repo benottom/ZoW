@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
 import Section from '../../components/Section.astro';
 import FeatureGrid from '../../components/FeatureGrid.astro';
 import Badge from '../../components/Badge.astro';
+import embeddedHardwareLab from '../../assets/images/embedded-hardware-lab.jpg';
 const breadcrumbs = [
   { name: 'Home', href: '/' },
   { name: 'Platform', href: '/platform' },
@@ -15,12 +17,27 @@ const breadcrumbs = [
   breadcrumbs={breadcrumbs}
 >
   <Hero
+    split
     eyebrow="Platform"
     headline="A cyber range built for autonomous systems."
     body="ZoneOfWar combines drone simulation, cyber infrastructure, mission orchestration and performance analytics in one browser-based platform. Teams can safely reproduce UAS security problems, practice response and prove readiness."
     primaryCta={{ label: 'Explore the Mission Library', href: '/missions', event: 'mission_card_open' }}
     secondaryCta={{ label: 'Book a Platform Demo', href: '/contact', event: 'hero_demo_cta' }}
-  />
+  >
+    <div class="relative">
+      <Image
+        src={embeddedHardwareLab}
+        alt="A microcontroller board wired to a breadboard on a lab bench, representing companion-computer and embedded systems work"
+        width={900}
+        height={1125}
+        class="aspect-[4/5] w-full rounded-md border border-border object-cover shadow-xl"
+        loading="eager"
+      />
+      <div class="absolute bottom-0 left-0 right-0 rounded-b-md bg-gradient-to-t from-black/70 to-transparent p-4 pt-10">
+        <p class="font-mono text-[11px] tracking-wide text-white/80">EMBEDDED LAB · COMPANION COMPUTER</p>
+      </div>
+    </div>
+  </Hero>
 
   <Section eyebrow="Four Platform Layers" heading="Simulation, cyber, mission and evidence — working together.">
     <FeatureGrid

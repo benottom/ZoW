@@ -1,9 +1,11 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Hero from '../../components/Hero.astro';
 import Section from '../../components/Section.astro';
 import ArchitectureDiagram from '../../components/ArchitectureDiagram.astro';
 import FeatureGrid from '../../components/FeatureGrid.astro';
+import droneFieldFlight from '../../assets/images/drone-field-flight.jpg';
 const breadcrumbs = [
   { name: 'Home', href: '/' },
   { name: 'Platform', href: '/platform' },
@@ -16,11 +18,26 @@ const breadcrumbs = [
   breadcrumbs={breadcrumbs}
 >
   <Hero
+    split
     eyebrow="Architecture"
     headline="From software-in-the-loop to hardware-in-the-loop."
     body="Start with safe, reproducible virtual missions. Add physical components only when the training objective requires them and the environment is properly controlled."
     primaryCta={{ label: 'Discuss a Private Deployment', href: '/contact', event: 'hero_demo_cta' }}
-  />
+  >
+    <div class="relative">
+      <Image
+        src={droneFieldFlight}
+        alt="A quadcopter drone in flight near a steel bridge, used in ZoneOfWar hardware-in-the-loop labs"
+        width={900}
+        height={1125}
+        class="aspect-[4/5] w-full rounded-md border border-border object-cover shadow-xl"
+        loading="eager"
+      />
+      <div class="absolute bottom-0 left-0 right-0 rounded-b-md bg-gradient-to-t from-black/70 to-transparent p-4 pt-10">
+        <p class="font-mono text-[11px] tracking-wide text-white/80">FIELD TEST · CONTROLLED AIRSPACE</p>
+      </div>
+    </div>
+  </Hero>
 
   <Section eyebrow="Cloud / Simulation Tier" heading="Everything most learners need, entirely virtual.">
     <FeatureGrid
