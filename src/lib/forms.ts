@@ -42,6 +42,27 @@ export async function logSubmission(kind: string, payload: Record<string, unknow
   }
 }
 
+/**
+ * Forward a validated submission to Formspree so it actually reaches an inbox.
+ * Returns false (never throws) if no endpoint is configured or Formspree rejects it,
+ * so the caller can decide how to respond to the visitor.
+ */
+export async function forwardToFormspree(payload: Record<string, unknown>): Promise<boolean> {
+  const endpoint = import.meta.env.FORMSPREE_CONTACT_ENDPOINT;
+  if (!endpoint) return false;
+
+  try {
+    const res = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(payload),
+    });
+    return res.ok;
+  } catch {
+    return false;
+  }
+}
+
 export function jsonResponse(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
     status,

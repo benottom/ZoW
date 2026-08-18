@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { isValidEmail, str, looksLikeSpam, logSubmission, jsonResponse } from '../../lib/forms';
+import { isValidEmail, str, looksLikeSpam, logSubmission, forwardToFormspree, jsonResponse } from '../../lib/forms';
 
 export const prerender = false;
 
@@ -51,6 +51,16 @@ export const POST: APIRoute = async ({ request }) => {
   }
 
   await logSubmission(`lead-${formType}`, payload);
+
+  if (formType === 'contact') {
+    const delivered = await forwardToFormspree(payload);
+    if (!delivered) {
+      return jsonResponse(
+        { ok: false, error: 'Something went wrong sending your message. Please try again or email us directly.' },
+        502
+      );
+    }
+  }
 
   return jsonResponse({ ok: true });
 };

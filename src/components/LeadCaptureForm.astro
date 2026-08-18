@@ -145,6 +145,10 @@ const formId = `zow-form-${formType}`;
             errorSummary.textContent = 'Please fix the highlighted fields and try again.';
             errorSummary.classList.remove('hidden');
             errorSummary.focus();
+          } else if (errorSummary) {
+            errorSummary.textContent = (data.error as string) || 'Something went wrong sending your request. Please try again.';
+            errorSummary.classList.remove('hidden');
+            errorSummary.focus();
           }
           return;
         }
