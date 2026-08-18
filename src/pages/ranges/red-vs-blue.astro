@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import FeatureGrid from '../../components/FeatureGrid.astro';
+import StepList from '../../components/StepList.astro';
+---
+<BaseLayout
+  title="Drone Red vs Blue Cyber Range | ZoneOfWar"
+  description="Run multi-user UAS Red Team vs Blue Team missions with shared objectives, live scoring and structured after-action review."
+>
+  <Hero
+    eyebrow="Red vs Blue"
+    headline="Two teams. One mission. Live consequences."
+    body="Red vs Blue exercises put adversary and defender teams into the same simulated UAS operation. Each action changes the state of the mission and the scoring engine tracks both cyber and operational outcomes."
+    primaryCta={{ label: 'Run a Team Exercise', href: '/contact', event: 'demo_form_start' }}
+  />
+
+  <Section tone="raised" eyebrow="Exercise Flow" heading="Briefing to debrief.">
+    <StepList
+      steps={[
+        { title: 'Briefing', body: 'Mission, rules of engagement and success criteria.' },
+        { title: 'Preparation', body: 'Team roles, tools and defensive baseline.' },
+        { title: 'Live exercise', body: 'Adversary actions and defender response.' },
+        { title: 'Injects', body: 'Changing conditions, mission pressure and new evidence.' },
+        { title: 'Debrief', body: 'Shared timeline, score, root causes and lessons learned.' },
+      ]}
+    />
+  </Section>
+
+  <Section eyebrow="Best For" heading="Who runs Red vs Blue exercises.">
+    <FeatureGrid
+      columns={3}
+      features={[
+        { title: 'Cybersecurity teams', body: 'Build adversary-aware detection and response skills together.' },
+        { title: 'Defense & public-safety exercises', body: 'Rehearse coordinated response under realistic pressure.' },
+        { title: 'University competitions', body: 'Run structured, scored competitions with a shared scenario.' },
+        { title: 'Drone manufacturers', body: 'Product-security teams stress-test designs against an active adversary.' },
+        { title: 'Tabletop-to-technical escalation', body: 'Move a tabletop exercise into a hands-on technical one.' },
+      ]}
+    />
+  </Section>
+
+  <Section align="center">
+    <a href="/contact" data-event="demo_form_start" class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong">
+      Run a Team Exercise
+    </a>
+  </Section>
+</BaseLayout>

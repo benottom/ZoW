@@ -1,0 +1,52 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import Hero from '../../../components/Hero.astro';
+import Section from '../../../components/Section.astro';
+
+const topics = (await getCollection('threatTopics')).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
+
+const taxonomy = [
+  'Firmware and embedded systems',
+  'Ground-control applications',
+  'Command and telemetry communications',
+  'Wireless and RF environment',
+  'Navigation and positioning',
+  'Sensors and transducers',
+  'Cloud / fleet services',
+  'Identity and access',
+  'Supply chain and updates',
+  'Human and operational factors',
+];
+---
+<BaseLayout
+  title="Drone Cybersecurity Threat Library | ZoneOfWar"
+  description="Explore UAS cybersecurity risks across firmware, communications, navigation, sensors, applications and supporting infrastructure."
+>
+  <Hero
+    eyebrow="Resources"
+    headline="Drone Threat Library."
+    body="A vendor-neutral knowledge base explaining how cybersecurity risks map across the UAS ecosystem, with links from each topic into safe training missions."
+  />
+
+  <Section eyebrow="Taxonomy" heading="Ten areas of the UAS ecosystem.">
+    <div class="flex flex-wrap gap-2">
+      {taxonomy.map((t) => (
+        <span class="rounded-full border border-border bg-surface px-3 py-1.5 text-xs text-text-muted">{t}</span>
+      ))}
+    </div>
+  </Section>
+
+  <Section eyebrow="Explore Threat Topics" heading="Published topics">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {topics.map((topic) => (
+        <a href={`/resources/threat-library/${topic.id}`} class="flex flex-col rounded-md border border-border bg-surface p-5 hover:border-accent/40 hover:bg-surface-hover">
+          <span class="font-mono text-xs uppercase tracking-wide text-text-faint">{topic.data.category}</span>
+          <h3 class="mt-2 text-base font-semibold text-text">{topic.data.title}</h3>
+          <p class="mt-2 flex-1 text-sm leading-relaxed text-text-muted">{topic.data.summary}</p>
+          <span class="mt-4 text-sm font-semibold text-accent">Read topic →</span>
+        </a>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,61 @@
+---
+// Lightweight, privacy-friendly, consent-gated event tracking.
+// No third-party analytics vendor is wired up yet — trackEvent() logs to
+// window.dataLayer and the console so a real provider (GA4 with consent
+// mode, Plausible, PostHog, etc.) can be dropped in later without touching
+// markup, since every interactive element already carries data-event.
+---
+<script>
+  const STORAGE_KEY = 'zow_consent';
+
+  type Consent = { analytics: boolean; ts: string; version: number };
+
+  function readConsent(): Consent | null {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? (JSON.parse(raw) as Consent) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function track(name: string, props: Record<string, unknown> = {}) {
+    const consent = readConsent();
+    if (!consent?.analytics) return;
+    const payload = {
+      event: name,
+      page: location.pathname,
+      ...props,
+    };
+    (window as any).dataLayer = (window as any).dataLayer || [];
+    (window as any).dataLayer.push(payload);
+    if (import.meta.env.DEV) {
+      console.debug('[zow:event]', payload);
+    }
+  }
+
+  (window as any).zowTrack = track;
+
+  document.addEventListener('click', (e) => {
+    const el = (e.target as HTMLElement)?.closest('[data-event]');
+    if (!el) return;
+    const name = el.getAttribute('data-event');
+    if (!name) return;
+    let props: Record<string, unknown> = {};
+    const raw = el.getAttribute('data-event-props');
+    if (raw) {
+      try {
+        props = JSON.parse(raw);
+      } catch {
+        /* ignore malformed props */
+      }
+    }
+    track(name, props);
+  });
+
+  document.addEventListener('submit', (e) => {
+    const form = e.target as HTMLFormElement;
+    const name = form?.getAttribute?.('data-event-submit');
+    if (name) track(name);
+  });
+</script>

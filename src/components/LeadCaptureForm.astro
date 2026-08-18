@@ -1,0 +1,167 @@
+---
+export interface FormField {
+  name: string;
+  label: string;
+  type?: 'text' | 'email' | 'tel' | 'select' | 'textarea';
+  required?: boolean;
+  options?: string[];
+  placeholder?: string;
+  full?: boolean;
+}
+interface Props {
+  formType: 'demo' | 'academic' | 'early-access' | 'contact';
+  fields: FormField[];
+  submitLabel: string;
+  analyticsEvent: string;
+  withConsent?: boolean;
+  consentLabel?: string;
+}
+const {
+  formType,
+  fields,
+  submitLabel,
+  analyticsEvent,
+  withConsent = false,
+  consentLabel = 'I agree to be contacted about this request and accept the Privacy Policy.',
+} = Astro.props;
+const formId = `zow-form-${formType}`;
+---
+<form id={formId} class="space-y-5" data-event-submit={analyticsEvent} novalidate>
+  <input type="hidden" name="formType" value={formType} />
+  <input type="hidden" name="renderedAt" class="zow-rendered-at" value="" />
+  <div class="hidden" aria-hidden="true">
+    <label for={`${formId}-website`}>Leave this field empty</label>
+    <input id={`${formId}-website`} type="text" name="website" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <div id={`${formId}-error-summary`} class="hidden rounded-lg border border-danger/40 bg-danger-soft px-4 py-3 text-sm text-danger" role="alert" tabindex="-1"></div>
+
+  <div class="grid grid-cols-1 gap-5 sm:grid-cols-2">
+    {fields.map((field) => (
+      <div class:list={[field.full ? 'sm:col-span-2' : '']}>
+        <label for={`${formId}-${field.name}`} class="block text-sm font-medium text-text">
+          {field.label} {field.required && <span class="text-danger" aria-hidden="true">*</span>}
+        </label>
+
+        {field.type === 'select' ? (
+          <select
+            id={`${formId}-${field.name}`}
+            name={field.name}
+            required={field.required}
+            class="mt-1.5 w-full rounded-md border border-border bg-bg-raised px-3 py-2.5 text-sm text-text focus-visible:border-accent"
+          >
+            <option value="">Select...</option>
+            {field.options?.map((opt) => <option value={opt}>{opt}</option>)}
+          </select>
+        ) : field.type === 'textarea' ? (
+          <textarea
+            id={`${formId}-${field.name}`}
+            name={field.name}
+            required={field.required}
+            rows="4"
+            placeholder={field.placeholder}
+            class="mt-1.5 w-full rounded-md border border-border bg-bg-raised px-3 py-2.5 text-sm text-text placeholder:text-text-faint focus-visible:border-accent"
+          ></textarea>
+        ) : (
+          <input
+            id={`${formId}-${field.name}`}
+            name={field.name}
+            type={field.type ?? 'text'}
+            required={field.required}
+            placeholder={field.placeholder}
+            class="mt-1.5 w-full rounded-md border border-border bg-bg-raised px-3 py-2.5 text-sm text-text placeholder:text-text-faint focus-visible:border-accent"
+          />
+        )}
+        <p class="zow-field-error mt-1 hidden text-xs text-danger" data-for={field.name}></p>
+      </div>
+    ))}
+  </div>
+
+  {withConsent && (
+    <div class="flex items-start gap-3">
+      <input id={`${formId}-consent`} name="consent" type="checkbox" class="mt-1 h-4 w-4 rounded border-border bg-bg-raised" />
+      <label for={`${formId}-consent`} class="text-sm text-text-muted">{consentLabel}</label>
+    </div>
+  )}
+
+  <button
+    type="submit"
+    class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong disabled:opacity-60"
+  >
+    {submitLabel}
+  </button>
+
+  <p class="zow-form-success hidden rounded-lg border border-accent/40 bg-accent-soft px-4 py-3 text-sm text-accent" role="status">
+    Thanks — we've received your request and will follow up shortly.
+  </p>
+</form>
+
+<script>
+  const forms = document.querySelectorAll<HTMLFormElement>('form[id^="zow-form-"]');
+
+  forms.forEach((form) => {
+    const renderedAtInput = form.querySelector<HTMLInputElement>('.zow-rendered-at');
+    if (renderedAtInput) renderedAtInput.value = String(Date.now());
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const errorSummary = form.querySelector<HTMLElement>('[id$="-error-summary"]');
+      const success = form.querySelector<HTMLElement>('.zow-form-success');
+      const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      form.querySelectorAll('.zow-field-error').forEach((el) => el.classList.add('hidden'));
+      errorSummary?.classList.add('hidden');
+
+      const missing = Array.from(form.querySelectorAll<HTMLInputElement>('[required]')).filter((el) => !el.value.trim());
+      if (missing.length > 0) {
+        missing.forEach((el) => {
+          const err = form.querySelector<HTMLElement>(`.zow-field-error[data-for="${el.name}"]`);
+          if (err) {
+            err.textContent = 'This field is required.';
+            err.classList.remove('hidden');
+          }
+        });
+        if (errorSummary) {
+          errorSummary.textContent = `Please complete ${missing.length} required field${missing.length > 1 ? 's' : ''}.`;
+          errorSummary.classList.remove('hidden');
+          errorSummary.focus();
+        }
+        return;
+      }
+
+      submitBtn?.setAttribute('disabled', 'true');
+      try {
+        const res = await fetch('/api/lead', { method: 'POST', body: new FormData(form) });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          if (data.errors && errorSummary) {
+            Object.entries(data.errors as Record<string, string>).forEach(([field, msg]) => {
+              const err = form.querySelector<HTMLElement>(`.zow-field-error[data-for="${field}"]`);
+              if (err) {
+                err.textContent = msg;
+                err.classList.remove('hidden');
+              }
+            });
+            errorSummary.textContent = 'Please fix the highlighted fields and try again.';
+            errorSummary.classList.remove('hidden');
+            errorSummary.focus();
+          }
+          return;
+        }
+        form.reset();
+        Array.from(form.children).forEach((child) => {
+          if (!(child instanceof HTMLElement) || child === success) return;
+          child.style.display = 'none';
+        });
+        success?.classList.remove('hidden');
+      } catch {
+        if (errorSummary) {
+          errorSummary.textContent = 'Something went wrong sending your request. Please try again.';
+          errorSummary.classList.remove('hidden');
+        }
+      } finally {
+        submitBtn?.removeAttribute('disabled');
+      }
+    });
+  });
+</script>

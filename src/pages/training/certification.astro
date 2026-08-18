@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import LeadCaptureForm from '../../components/LeadCaptureForm.astro';
+import CheckList from '../../components/CheckList.astro';
+
+const certs = [
+  { code: 'ZOW-101', name: 'Drone Cybersecurity Foundations' },
+  { code: 'ZOW-201', name: 'UAS Red Team Practitioner' },
+  { code: 'ZOW-202', name: 'UAS Blue Team Defender' },
+  { code: 'ZOW-301', name: 'UAS Cyber Range Operator' },
+];
+---
+<BaseLayout
+  title="Drone Cybersecurity Certification | ZoneOfWar"
+  description="Validate practical drone cybersecurity skills through hands-on missions and performance-based ZoneOfWar assessments."
+>
+  <Hero
+    eyebrow="Certification"
+    headline="Prove performance, not memorization."
+    body="ZoneOfWar skill validation is based on practical mission performance inside controlled range environments."
+    primaryCta={{ label: 'Join Certification Waitlist', href: '#waitlist' }}
+  />
+
+  <Section eyebrow="Recommended Model" heading="A practical certification ladder.">
+    <div class="divide-hairline">
+      {certs.map((c) => (
+        <div class="flex items-center gap-5 py-3.5 first:pt-0">
+          <span class="font-mono text-sm font-semibold text-accent">{c.code}</span>
+          <span class="text-sm text-text-muted">{c.name}</span>
+        </div>
+      ))}
+      <div class="flex items-center gap-5 py-3.5">
+        <span class="font-mono text-sm font-semibold text-text-faint">Future</span>
+        <span class="text-sm text-text-faint">Autonomous Systems Security Professional</span>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="raised" eyebrow="Assessment Principles" heading="How we validate skill.">
+    <CheckList
+      items={[
+        'Practical environment',
+        'Time-bound objectives',
+        'Evidence-based scoring',
+        'Clear rules of engagement',
+        'Human-reviewed components for advanced levels',
+        'Retake and integrity policy',
+      ]}
+    />
+  </Section>
+
+  <Section containerClass="max-w-2xl">
+    <p class="border-l-2 border-warning py-1 pl-5 text-sm leading-relaxed text-text-muted">
+      <strong class="text-text">Launch note:</strong> ZoneOfWar does not currently claim independent accreditation
+      or industry recognition. Certificates are ZoneOfWar practical skill badges until external validation or
+      accreditation exists.
+    </p>
+  </Section>
+
+  <Section id="waitlist" eyebrow="Waitlist" heading="Be first in line." containerClass="max-w-xl">
+    <LeadCaptureForm
+      formType="early-access"
+      analyticsEvent="signup_start"
+      submitLabel="Join Certification Waitlist"
+      fields={[
+        { name: 'name', label: 'Name', required: true },
+        { name: 'email', label: 'Email', type: 'email', required: true },
+        {
+          name: 'skillLevel',
+          label: 'Which certification interests you most?',
+          type: 'select',
+          options: certs.map((c) => `${c.code} — ${c.name}`),
+        },
+      ]}
+    />
+  </Section>
+</BaseLayout>

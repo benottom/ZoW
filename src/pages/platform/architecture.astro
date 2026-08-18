@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import ArchitectureDiagram from '../../components/ArchitectureDiagram.astro';
+import FeatureGrid from '../../components/FeatureGrid.astro';
+---
+<BaseLayout
+  title="ZoneOfWar Architecture | Cloud and Hardware Drone Cyber Range"
+  description="See how ZoneOfWar combines simulation, isolated cyber environments, scoring and optional hardware-in-the-loop for UAS security training."
+>
+  <Hero
+    eyebrow="Architecture"
+    headline="From software-in-the-loop to hardware-in-the-loop."
+    body="Start with safe, reproducible virtual missions. Add physical components only when the training objective requires them and the environment is properly controlled."
+    primaryCta={{ label: 'Discuss a Private Deployment', href: '/contact', event: 'hero_demo_cta' }}
+  />
+
+  <Section eyebrow="Cloud / Simulation Tier" heading="Everything most learners need, entirely virtual.">
+    <FeatureGrid
+      columns={3}
+      features={[
+        { title: 'Browser-accessible workspace', body: 'Launch a mission workspace directly from the browser, no client install.' },
+        { title: 'Containerized range environments', body: 'Each mission runs in an isolated, resettable container.' },
+        { title: 'Virtual UAS & mission-control', body: 'Simulated aircraft, sensors and ground-control components.' },
+        { title: 'Network & telemetry emulation', body: 'Realistic command, telemetry and network conditions.' },
+        { title: 'Security monitoring & analysis', body: 'The same class of tooling defenders use in production.' },
+        { title: 'Resettable scenario snapshots', body: 'Retry a mission from a clean state as many times as needed.' },
+      ]}
+    />
+  </Section>
+
+  <Section eyebrow="Hardware Tier" heading="Controlled, advanced and gated.">
+    <ArchitectureDiagram
+      layers={[
+        { label: 'Physical flight controllers', description: 'Companion computers and flight hardware in a controlled lab.' },
+        { label: 'Controlled wireless / SDR', description: 'Shielded, legally compliant test environments where applicable.' },
+        { label: 'Private lab deployment', description: 'Instructor supervision required for all hardware exercises.' },
+      ]}
+    />
+  </Section>
+
+  <Section align="center" containerClass="max-w-2xl">
+    <div class="rounded-md border border-warning/30 bg-warning-soft p-6 text-center">
+      <p class="font-mono text-xs font-semibold uppercase tracking-wide text-warning">Design Principle</p>
+      <p class="mt-3 text-sm leading-relaxed text-text-muted">
+        The platform defaults to simulation. Physical RF or hardware exercises are clearly gated, controlled and
+        documented as advanced enterprise capabilities.
+      </p>
+    </div>
+  </Section>
+
+  <Section align="center">
+    <a href="/contact" data-event="hero_demo_cta" class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong">
+      Discuss a Private Deployment
+    </a>
+  </Section>
+</BaseLayout>

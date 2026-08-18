@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import FeatureGrid from '../../components/FeatureGrid.astro';
+import CheckList from '../../components/CheckList.astro';
+import MissionCard from '../../components/MissionCard.astro';
+import ResponsibleUseNotice from '../../components/ResponsibleUseNotice.astro';
+
+const missions = (await getCollection('missions', ({ data }) => data.role === 'red' && data.status === 'published')).slice(0, 4);
+---
+<BaseLayout
+  title="Drone Red Team Cyber Range | ZoneOfWar"
+  description="Practice authorized UAS Red Team missions covering drone software, communications, navigation and embedded security in isolated environments."
+>
+  <Hero
+    eyebrow="Drone Attack Range"
+    headline="Learn the drone attack surface by working inside it."
+    body="Red Team missions teach how UAS weaknesses emerge across software, communications, navigation, sensors and supporting infrastructure. All exercises run inside isolated, authorized environments."
+    primaryCta={{ label: 'Browse Red Team Missions', href: '/missions?role=red', event: 'mission_card_open' }}
+  />
+
+  <Section eyebrow="Mission Families" heading="Seven areas of the UAS attack surface.">
+    <FeatureGrid
+      columns={4}
+      features={[
+        { title: 'Reconnaissance & attack-surface mapping', body: 'Identify what makes up a target UAS and where trust boundaries live.' },
+        { title: 'Telemetry & command-link security', body: 'Test the assumptions built into command-and-telemetry links.' },
+        { title: 'Protocol & authentication weaknesses', body: 'Examine how commonly used UAS protocols handle authentication.' },
+        { title: 'Embedded & companion-computer', body: 'Investigate vulnerabilities in onboard general-purpose systems.' },
+        { title: 'Navigation & sensor deception', body: 'Understand how positioning and sensor inputs can be misled — conceptually.' },
+        { title: 'Mission-data confidentiality', body: 'Explore how mission data could be exposed and how to prevent it.' },
+        { title: 'Supply-chain & configuration', body: 'Trace risk introduced through components and configuration drift.' },
+      ]}
+    />
+  </Section>
+
+  <Section tone="raised" eyebrow="Learning Outcomes" heading="What you'll be able to do.">
+    <CheckList
+      accent="danger"
+      items={[
+        'Recognize the major UAS trust boundaries',
+        'Understand how cyber and physical effects can connect',
+        'Document attack paths and evidence',
+        'Communicate risk to engineering and operations teams',
+        'Recommend mitigations and retest after fixes',
+      ]}
+    />
+  </Section>
+
+  <Section containerClass="max-w-3xl">
+    <ResponsibleUseNotice />
+    <p class="mt-4 text-sm leading-relaxed text-text-muted">
+      ZoneOfWar teaches offensive security as a defensive capability. Public pages never provide executable attack
+      recipes — detailed procedures live only inside gated training labs designed for authorized use.
+    </p>
+  </Section>
+
+  <Section eyebrow="Red Team Missions" heading="Start here.">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {missions.map((mission) => (
+        <MissionCard
+          slug={mission.id}
+          missionId={mission.data.missionId}
+          title={mission.data.title}
+          shortDescription={mission.data.shortDescription}
+          role={mission.data.role}
+          difficulty={mission.data.difficulty}
+          domains={mission.data.domains}
+          durationMinutes={mission.data.durationMinutes}
+          mode={mission.data.mode}
+          isFree={mission.data.isFree}
+        />
+      ))}
+    </div>
+    <div class="mt-8 text-center">
+      <a href="/missions" class="text-sm font-semibold text-accent hover:underline">Browse Red Team Missions →</a>
+    </div>
+  </Section>
+</BaseLayout>

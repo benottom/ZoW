@@ -1,0 +1,73 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+---
+<BaseLayout
+  title="Acceptable Use Policy | ZoneOfWar"
+  description="Rules of engagement and acceptable-use requirements for ZoneOfWar drone cyber range missions and labs."
+>
+  <Section containerClass="max-w-3xl">
+    <p class="font-mono text-xs uppercase tracking-wide text-accent">Legal</p>
+    <h1 class="mt-3 text-3xl font-bold text-text sm:text-4xl">Acceptable Use Policy</h1>
+    <p class="mt-2 text-sm text-text-faint">Last updated: 18 August 2026</p>
+
+    <div class="prose-zow mt-8">
+      <p>
+        This Acceptable Use Policy sets the rules of engagement for every ZoneOfWar mission, lab and exercise. It
+        applies to all users, including individual accounts, team members and instructor-led cohorts. Acceptance is
+        required, with version and timestamp recorded, before any account can enter a hands-on lab.
+      </p>
+
+      <h2>1. Authorized environments only</h2>
+      <p>
+        All offensive and defensive techniques practiced on ZoneOfWar must stay inside the isolated environments we
+        provide. You may never apply techniques learned on the platform to real drones, networks, or systems that you
+        do not own and are not explicitly authorized in writing to test.
+      </p>
+
+      <h2>2. No real-world interference</h2>
+      <p>
+        You agree not to use ZoneOfWar, or knowledge gained from it, to jam, spoof, or otherwise interfere with real
+        aircraft, spectrum, navigation systems or public communications. Any advanced physical RF or hardware-in-the-loop
+        work is only available in separately controlled, legally compliant environments with explicit approval.
+      </p>
+
+      <h2>3. No unauthorized access</h2>
+      <p>
+        You agree not to attempt to access other users' or organizations' data, mission environments or accounts
+        without authorization, and not to attempt to bypass platform isolation, monitoring or safety controls.
+      </p>
+
+      <h2>4. Respect scoring and evidence integrity</h2>
+      <p>
+        Do not attempt to manipulate scoring systems, falsify evidence, or misrepresent completed missions,
+        certificates or skill records.
+      </p>
+
+      <h2>5. Team and instructor-led exercises</h2>
+      <p>
+        Red vs Blue and other multi-user exercises must stay within the mission's stated rules of engagement.
+        Instructors are responsible for briefing participants and may pause, reset or end an exercise at any time.
+      </p>
+
+      <h2>6. Restricted and advanced content</h2>
+      <p>
+        Some advanced or hardware-enabled labs require additional terms, organization approval, or manual vetting
+        before access is granted, and may be subject to export-control or sanctions screening.
+      </p>
+
+      <h2>7. Reporting concerns</h2>
+      <p>
+        If you believe another user has violated this policy, or you discover a security issue, report it to
+        <a href="mailto:security@zoneofwar.com">security@zoneofwar.com</a>. See our
+        <a href="/company/responsible-use">Responsible Use principles</a> for the broader context behind these rules.
+      </p>
+
+      <h2>8. Enforcement</h2>
+      <p>
+        Violating this policy may result in suspension or termination of your account and, where required by law,
+        referral to relevant authorities.
+      </p>
+    </div>
+  </Section>
+</BaseLayout>

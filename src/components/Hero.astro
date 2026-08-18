@@ -1,0 +1,71 @@
+---
+import Kicker from './Kicker.astro';
+
+interface CTA {
+  label: string;
+  href: string;
+  event?: string;
+}
+interface Props {
+  eyebrow?: string;
+  headline: string;
+  body?: string;
+  primaryCta?: CTA;
+  secondaryCta?: CTA;
+  trustLine?: string;
+  align?: 'left' | 'center';
+  split?: boolean;
+}
+const { eyebrow, headline, body, primaryCta, secondaryCta, trustLine, align = 'left', split = false } = Astro.props;
+---
+<section class="relative overflow-hidden border-b border-border">
+  <div class="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-accent/40 to-transparent"></div>
+  <div class:list={['relative mx-auto max-w-6xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8', split ? 'grid grid-cols-1 items-center gap-14 lg:grid-cols-[1.05fr_0.95fr]' : '']}>
+    <div class:list={[align === 'center' && !split ? 'text-center' : '']}>
+      {eyebrow && <Kicker class={align === 'center' && !split ? 'justify-center' : ''}>{eyebrow}</Kicker>}
+      <h1
+        class:list={[
+          'text-balance font-bold leading-[0.98] tracking-tight text-text',
+          split ? 'mt-5 text-4xl sm:text-5xl lg:text-[3.4rem]' : 'mt-5 text-4xl sm:text-5xl lg:text-6xl',
+          align === 'center' && !split ? 'mx-auto max-w-3xl' : 'max-w-xl',
+        ]}
+      >
+        {headline}
+      </h1>
+      {body && (
+        <p class:list={['mt-6 text-balance text-lg leading-relaxed text-text-muted', align === 'center' && !split ? 'mx-auto max-w-2xl' : 'max-w-lg']}>
+          {body}
+        </p>
+      )}
+      {(primaryCta || secondaryCta) && (
+        <div class:list={['mt-9 flex flex-col gap-3 sm:flex-row', align === 'center' && !split ? 'sm:justify-center' : '']}>
+          {primaryCta && (
+            <a
+              href={primaryCta.href}
+              data-event={primaryCta.event}
+              class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong"
+            >
+              {primaryCta.label}
+            </a>
+          )}
+          {secondaryCta && (
+            <a
+              href={secondaryCta.href}
+              data-event={secondaryCta.event}
+              class="inline-flex items-center justify-center rounded-md border border-border px-6 py-3 text-sm font-semibold text-text hover:bg-surface"
+            >
+              {secondaryCta.label}
+            </a>
+          )}
+        </div>
+      )}
+      {trustLine && <p class="mt-7 text-sm text-text-faint">{trustLine}</p>}
+      {!split && <slot />}
+    </div>
+    {split && (
+      <div>
+        <slot />
+      </div>
+    )}
+  </div>
+</section>

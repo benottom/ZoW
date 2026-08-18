@@ -1,0 +1,54 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import { team } from '../../data/team';
+---
+<BaseLayout
+  title="About ZoneOfWar | Cyber Security Finland Oy"
+  description="Meet the team building ZoneOfWar, a Finland-based cyber range for drones and autonomous systems."
+>
+  <Hero
+    eyebrow="Company"
+    headline="Building cyber resilience for autonomous systems."
+    body="ZoneOfWar is a product initiative of Cyber Security Finland Oy. We are building hands-on cyber-range infrastructure for drones and, over time, other unmanned and autonomous systems."
+    primaryCta={{ label: 'Contact the Team', href: '/contact', event: 'hero_demo_cta' }}
+  />
+
+  <Section eyebrow="Why Now" heading="Autonomous systems need repeatable training environments.">
+    <p class="max-w-3xl text-sm leading-relaxed text-text-muted">
+      Autonomous systems are moving into logistics, industrial inspection, emergency response, critical infrastructure
+      and security operations. Security teams need repeatable environments where they can learn what failure looks
+      like and validate how to respond.
+    </p>
+  </Section>
+
+  <Section eyebrow="Team" heading="The people building ZoneOfWar.">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+      {team.map((member) => (
+        <div class="rounded-md border border-border bg-surface p-5">
+          <div class="flex h-12 w-12 items-center justify-center rounded-full bg-accent-soft font-mono text-sm font-semibold text-accent">
+            {member.name.split(' ').map((n) => n[0]).slice(0, 2).join('')}
+          </div>
+          <h3 class="mt-4 text-base font-semibold text-text">{member.name}</h3>
+          <p class="mt-1 text-xs font-medium text-text-faint">{member.role}</p>
+          <p class="mt-3 text-sm leading-relaxed text-text-muted">{member.shortBio}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <Section eyebrow="Company" heading="Cyber Security Finland Oy">
+    <p class="max-w-3xl text-sm leading-relaxed text-text-muted">
+      Cyber Security Finland Oy develops and delivers cybersecurity, risk management, vulnerability assessment and
+      incident-response capabilities from Finland.
+    </p>
+  </Section>
+
+  <Section align="center">
+    <div class="flex flex-col justify-center gap-3 sm:flex-row">
+      <a href="/partners" class="inline-flex items-center justify-center rounded-md border border-border bg-surface px-6 py-3 text-sm font-semibold text-text hover:bg-surface-hover">Partner With Us</a>
+      <a href="/contact" data-event="hero_demo_cta" class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong">Contact the Team</a>
+    </div>
+  </Section>
+</BaseLayout>

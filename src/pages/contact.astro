@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import LeadCaptureForm from '../components/LeadCaptureForm.astro';
+---
+<BaseLayout
+  title="Contact ZoneOfWar | Book a Drone Cyber Range Demo"
+  description="Contact ZoneOfWar to discuss drone cybersecurity training, team exercises, academic labs or private cyber-range deployments."
+>
+  <Hero
+    eyebrow="Contact"
+    headline="Tell us what you need to train for."
+    body="Whether you are building a university lab, preparing a security team or validating a drone product, we can help define the right first range."
+  />
+
+  <Section containerClass="max-w-2xl">
+    <LeadCaptureForm
+      formType="contact"
+      analyticsEvent="demo_form_submit"
+      submitLabel="Submit Request"
+      withConsent
+      consentLabel="I agree to be contacted about this request and accept the Privacy Policy."
+      fields={[
+        { name: 'name', label: 'Name', required: true },
+        { name: 'email', label: 'Work email', type: 'email', required: true },
+        { name: 'organization', label: 'Organization', required: true },
+        { name: 'country', label: 'Country' },
+        { name: 'role', label: 'Role' },
+        {
+          name: 'useCase',
+          label: 'Use case',
+          type: 'select',
+          required: true,
+          options: ['Individual', 'Team', 'University', 'Manufacturer', 'Critical Infrastructure', 'Public Sector', 'Other'],
+        },
+        { name: 'teamSize', label: 'Team size' },
+        {
+          name: 'deployment',
+          label: 'Deployment interest',
+          type: 'select',
+          options: ['Cloud', 'Private', 'On-prem', 'Hardware lab', 'Not sure'],
+        },
+        { name: 'message', label: 'Message', type: 'textarea', full: true },
+      ]}
+    />
+  </Section>
+
+  <Section align="center" containerClass="max-w-xl">
+    <p class="text-sm text-text-muted">
+      For partnership, research or incubator inquiries: contact
+      <a href="mailto:hello@cybersecurity.fi" class="text-accent underline underline-offset-2">Cyber Security Finland Oy</a>.
+    </p>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,29 @@
+---
+interface Props {
+  items: string[];
+  columns?: 1 | 2 | 3;
+  accent?: 'accent' | 'danger' | 'defense' | 'warning';
+}
+const { items, columns = 2, accent = 'accent' } = Astro.props;
+const colorMap: Record<string, string> = {
+  accent: 'text-accent',
+  danger: 'text-danger',
+  defense: 'text-defense',
+  warning: 'text-warning',
+};
+const colClass: Record<number, string> = {
+  1: '',
+  2: 'sm:grid-cols-2',
+  3: 'sm:grid-cols-2 lg:grid-cols-3',
+};
+---
+<ul class:list={['grid grid-cols-1 gap-x-8 gap-y-3', colClass[columns]]}>
+  {items.map((item) => (
+    <li class="flex items-start gap-2.5 text-sm leading-relaxed text-text-muted">
+      <svg class:list={['mt-0.5 h-4 w-4 shrink-0', colorMap[accent]]} viewBox="0 0 16 16" fill="none" aria-hidden="true">
+        <path d="M3 8.5L6.5 12L13 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      {item}
+    </li>
+  ))}
+</ul>

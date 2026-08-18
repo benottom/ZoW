@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import CheckList from '../../components/CheckList.astro';
+
+const paths = [
+  { name: 'Drone Cybersecurity Foundations', level: 'Foundation', hours: '6-8 hrs', audience: 'Everyone new to UAS security' },
+  { name: 'UAS Red Team Practitioner', level: 'Practitioner', hours: '15-20 hrs', audience: 'Pentesters, product security' },
+  { name: 'UAS Blue Team Defender', level: 'Practitioner', hours: '15-20 hrs', audience: 'SOC, IR, drone operations' },
+  { name: 'Drone Incident Responder', level: 'Advanced', hours: '10-15 hrs', audience: 'Incident response teams' },
+  { name: 'UAS Product Security Engineer', level: 'Advanced', hours: '20-25 hrs', audience: 'Engineering & product security' },
+  { name: 'Autonomous Systems Security Lead', level: 'Advanced', hours: '25-30 hrs', audience: 'Team leads & managers' },
+];
+---
+<BaseLayout
+  title="Drone Cybersecurity Training | ZoneOfWar"
+  description="Hands-on drone cybersecurity learning paths with guided labs, scored missions and practical skill validation."
+>
+  <Hero
+    eyebrow="Training"
+    headline="Build UAS cybersecurity skills by doing the work."
+    body="Learning paths combine short theory, guided labs and scored missions so users progress from system fundamentals to mission-level resilience."
+    primaryCta={{ label: 'Choose a Learning Path', href: '#paths' }}
+  />
+
+  <Section id="paths" eyebrow="Learning Paths" heading="Six paths, one skill record.">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {paths.map((p) => (
+        <div class="rounded-md border border-border bg-surface p-5">
+          <span class="font-mono text-xs uppercase tracking-wide text-text-faint">{p.level}</span>
+          <h3 class="mt-2 text-base font-semibold text-text">{p.name}</h3>
+          <p class="mt-2 text-sm text-text-muted">{p.audience}</p>
+          <p class="mt-3 text-xs text-text-faint">Estimated {p.hours}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <Section tone="raised" eyebrow="Path Design" heading="What every learning path includes.">
+    <CheckList
+      items={[
+        'Prerequisites',
+        'Estimated hours',
+        'Mission sequence',
+        'Skills measured',
+        'Final practical challenge',
+        'Downloadable completion record',
+      ]}
+    />
+  </Section>
+
+  <Section align="center">
+    <div class="flex flex-col justify-center gap-3 sm:flex-row">
+      <a href="/signup" data-event="hero_primary_cta" class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong">Choose a Learning Path</a>
+      <a href="/training/certification" class="inline-flex items-center justify-center rounded-md border border-border bg-surface px-6 py-3 text-sm font-semibold text-text hover:bg-surface-hover">See Certification →</a>
+    </div>
+  </Section>
+</BaseLayout>

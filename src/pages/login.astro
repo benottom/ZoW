@@ -1,0 +1,32 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+---
+<BaseLayout
+  title="Sign In | ZoneOfWar"
+  description="Sign in to your ZoneOfWar account."
+  noindex
+>
+  <Hero
+    eyebrow="Sign In"
+    headline="ZoneOfWar accounts are opening in Early Access."
+    body="The authenticated ZoneOfWar range (app.zoneofwar.com) is rolling out to Early Access users first. If you've requested access, we'll email you as soon as your account is ready."
+  />
+
+  <Section containerClass="max-w-lg" align="center">
+    <div class="rounded-md border border-border bg-surface p-6 text-center">
+      <p class="text-sm text-text-muted">Haven't requested access yet?</p>
+      <a href="/signup" data-event="signup_start" class="mt-4 inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong">
+        Request Early Access
+      </a>
+      <p class="mt-6 text-xs text-text-faint">
+        Already have an account or a question about access? Email
+        <a href="mailto:support@zoneofwar.com" class="text-accent underline underline-offset-2">support@zoneofwar.com</a>.
+      </p>
+    </div>
+    <p class="mt-6 text-center text-sm text-text-muted">
+      Looking for something else? <a href="/get-started" class="text-accent underline underline-offset-2">See all ways to get started</a>.
+    </p>
+  </Section>
+</BaseLayout>

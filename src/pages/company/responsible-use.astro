@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+
+const principles = [
+  'Authorization first',
+  'Isolation by default',
+  'Simulation before physical RF',
+  'No uncontrolled interference with public communications',
+  'Clear rules of engagement for team exercises',
+  'Responsible vulnerability handling',
+  'Privacy and minimal data collection',
+  'Export-control and sanctions review where applicable',
+  'Restricted advanced content when risk requires it',
+];
+---
+<BaseLayout
+  title="Responsible Use | ZoneOfWar"
+  description="ZoneOfWar responsible-use principles for authorized, isolated and safe drone cybersecurity training and research."
+>
+  <Hero
+    eyebrow="Responsible Use"
+    headline="Security training with clear boundaries."
+    body="ZoneOfWar is designed for authorized education, research, product security and resilience testing. The platform separates public educational content from gated hands-on labs and uses isolated environments to prevent unintended real-world effects."
+    primaryCta={{ label: 'Read Acceptable Use', href: '/acceptable-use' }}
+    secondaryCta={{ label: 'Report a Security Issue', href: '/security' }}
+  />
+
+  <Section eyebrow="Principles" heading="What responsible use means at ZoneOfWar.">
+    <ul class="grid grid-cols-1 gap-x-8 gap-y-4 sm:grid-cols-2 lg:grid-cols-3">
+      {principles.map((p, i) => (
+        <li class="flex items-baseline gap-3 border-t border-border pt-3">
+          <span class="font-mono text-xs text-text-faint">{String(i + 1).padStart(2, '0')}</span>
+          <span class="text-sm text-text-muted">{p}</span>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section eyebrow="User Commitment" heading="Accounts agree before they get hands-on access.">
+    <p class="max-w-3xl text-sm leading-relaxed text-text-muted">
+      Accounts must agree to acceptable-use and rules-of-engagement terms before entering hands-on labs. Enterprise
+      customers can add organization-specific policies and approvals.
+    </p>
+  </Section>
+
+  <Section eyebrow="Reporting" heading="Found a security issue?">
+    <p class="max-w-3xl text-sm leading-relaxed text-text-muted">
+      We provide a <a href="mailto:security@zoneofwar.com" class="text-accent underline underline-offset-2">security@zoneofwar.com</a>
+      channel and a vulnerability disclosure process. See the <a href="/security" class="text-accent underline underline-offset-2">Security page</a> for details.
+    </p>
+  </Section>
+
+  <Section align="center">
+    <div class="flex flex-col justify-center gap-3 sm:flex-row">
+      <a href="/acceptable-use" class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong">Read Acceptable Use</a>
+      <a href="/security" class="inline-flex items-center justify-center rounded-md border border-border bg-surface px-6 py-3 text-sm font-semibold text-text hover:bg-surface-hover">Report a Security Issue</a>
+    </div>
+  </Section>
+</BaseLayout>

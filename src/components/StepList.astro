@@ -1,0 +1,27 @@
+---
+interface Step {
+  title?: string;
+  body: string;
+}
+interface Props {
+  steps: Step[];
+  columns?: 3 | 4 | 5;
+  label?: string;
+}
+const { steps, columns = 5, label } = Astro.props;
+const colClass: Record<number, string> = {
+  3: 'sm:grid-cols-2 lg:grid-cols-3',
+  4: 'sm:grid-cols-2 lg:grid-cols-4',
+  5: 'sm:grid-cols-2 lg:grid-cols-5',
+};
+---
+<ol class:list={['grid grid-cols-1 gap-x-10 gap-y-8', colClass[columns]]}>
+  {steps.map((step, i) => (
+    <li>
+      <span class="font-mono text-3xl font-semibold text-border">{String(i + 1).padStart(2, '0')}</span>
+      {label && <span class="ml-2 font-mono text-[10px] uppercase tracking-wide text-text-faint">{label}</span>}
+      {step.title && <p class="mt-2 text-sm font-semibold text-text">{step.title}</p>}
+      <p class="mt-1.5 text-sm leading-relaxed text-text-muted">{step.body}</p>
+    </li>
+  ))}
+</ol>

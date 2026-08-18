@@ -1,0 +1,61 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import { render } from 'astro:content';
+
+const entries = await getCollection('faq');
+const rendered = await Promise.all(
+  entries
+    .sort((a, b) => a.data.order - b.data.order)
+    .map(async (e) => {
+      const { Content } = await render(e);
+      return { entry: e, Content };
+    })
+);
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: entries.map((e) => ({
+    '@type': 'Question',
+    name: e.data.question,
+  })),
+};
+---
+<BaseLayout
+  title="ZoneOfWar FAQ | Drone Cyber Range"
+  description="Frequently asked questions about ZoneOfWar drone cybersecurity training, cyber ranges, team exercises and deployment."
+  jsonLd={jsonLd}
+>
+  <Hero
+    eyebrow="FAQ"
+    headline="Frequently asked questions"
+    primaryCta={{ label: 'Start a Free Mission', href: '/signup', event: 'hero_primary_cta' }}
+  />
+
+  <Section containerClass="max-w-3xl">
+    <div class="divide-y divide-border rounded-md border border-border bg-surface">
+      {rendered.map(({ entry, Content }) => (
+        <details class="group px-5 py-1">
+          <summary class="flex cursor-pointer list-none items-center justify-between gap-4 py-4 text-sm font-medium text-text marker:content-none">
+            {entry.data.question}
+            <svg width="14" height="8" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="shrink-0 text-text-faint transition-transform group-open:rotate-180">
+              <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+            </svg>
+          </summary>
+          <div class="prose-zow pb-4 text-sm">
+            <Content />
+          </div>
+        </details>
+      ))}
+    </div>
+  </Section>
+</BaseLayout>
+
+<style>
+  summary::-webkit-details-marker {
+    display: none;
+  }
+</style>

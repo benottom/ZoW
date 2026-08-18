@@ -1,0 +1,106 @@
+---
+---
+<div
+  id="zow-consent-banner"
+  class="fixed inset-x-0 bottom-0 z-50 hidden border-t border-border bg-bg-raised/95 backdrop-blur px-4 py-5 sm:px-6"
+  role="region"
+  aria-label="Cookie consent"
+>
+  <div class="mx-auto flex max-w-6xl flex-col gap-4 md:flex-row md:items-center md:justify-between">
+    <div class="max-w-2xl text-sm text-text-muted">
+      <p>
+        We use essential cookies to run this site and optional analytics cookies to understand how it's used.
+        Lab and mission activity is never sent to marketing analytics. Read our
+        <a href="/privacy" class="text-accent underline underline-offset-2">Privacy Policy</a>.
+      </p>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      <button
+        id="zow-consent-customize"
+        type="button"
+        class="rounded-md border border-border px-4 py-2 text-sm font-medium text-text hover:bg-surface-hover"
+      >
+        Customize
+      </button>
+      <button
+        id="zow-consent-reject"
+        type="button"
+        class="rounded-md border border-border px-4 py-2 text-sm font-medium text-text hover:bg-surface-hover"
+      >
+        Reject non-essential
+      </button>
+      <button
+        id="zow-consent-accept"
+        type="button"
+        class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-[#04140b] hover:bg-accent-strong"
+      >
+        Accept all
+      </button>
+    </div>
+  </div>
+
+  <div id="zow-consent-preferences" class="mx-auto mt-4 hidden max-w-6xl border-t border-border pt-4">
+    <div class="flex items-start justify-between gap-4 sm:items-center">
+      <div>
+        <p class="text-sm font-medium text-text">Analytics cookies</p>
+        <p class="text-sm text-text-muted">Help us understand which pages and missions are useful. Off by default.</p>
+      </div>
+      <label class="relative inline-flex shrink-0 cursor-pointer items-center">
+        <input id="zow-consent-analytics-toggle" type="checkbox" class="peer sr-only" />
+        <span
+          class="h-6 w-11 rounded-full bg-surface-hover transition-colors peer-checked:bg-accent peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-accent peer-focus-visible:outline-offset-2"
+        ></span>
+        <span
+          class="absolute left-1 h-4 w-4 rounded-full bg-text transition-transform peer-checked:translate-x-5"
+        ></span>
+      </label>
+    </div>
+    <div class="mt-4 flex justify-end">
+      <button
+        id="zow-consent-save"
+        type="button"
+        class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-[#04140b] hover:bg-accent-strong"
+      >
+        Save preferences
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const STORAGE_KEY = 'zow_consent';
+  const VERSION = 1;
+
+  const banner = document.getElementById('zow-consent-banner');
+  const prefsPanel = document.getElementById('zow-consent-preferences');
+  const analyticsToggle = document.getElementById('zow-consent-analytics-toggle') as HTMLInputElement | null;
+
+  function getConsent() {
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch {
+      return null;
+    }
+  }
+
+  function saveConsent(analytics: boolean) {
+    const consent = { analytics, ts: new Date().toISOString(), version: VERSION };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(consent));
+    document.dispatchEvent(new CustomEvent('zow:consent', { detail: consent }));
+    banner?.classList.add('hidden');
+  }
+
+  if (!getConsent() && banner) {
+    banner.classList.remove('hidden');
+  }
+
+  document.getElementById('zow-consent-accept')?.addEventListener('click', () => saveConsent(true));
+  document.getElementById('zow-consent-reject')?.addEventListener('click', () => saveConsent(false));
+  document.getElementById('zow-consent-customize')?.addEventListener('click', () => {
+    prefsPanel?.classList.toggle('hidden');
+  });
+  document.getElementById('zow-consent-save')?.addEventListener('click', () => {
+    saveConsent(Boolean(analyticsToggle?.checked));
+  });
+</script>

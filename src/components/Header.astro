@@ -1,0 +1,162 @@
+---
+import Container from './Container.astro';
+import { primaryNav } from '../data/nav';
+---
+<header class="sticky top-0 z-40 border-b border-border bg-bg/90 backdrop-blur supports-[backdrop-filter]:bg-bg/75">
+  <Container class="flex h-16 items-center justify-between gap-4">
+    <a href="/" class="flex items-center gap-2 shrink-0" aria-label="ZoneOfWar home">
+      <span class="h-2.5 w-2.5 rounded-full bg-accent shadow-[0_0_12px_2px_var(--color-accent)]"></span>
+      <span class="font-mono text-lg font-semibold tracking-wide text-text">ZONE<span class="text-accent">OF</span>WAR</span>
+    </a>
+
+    <nav aria-label="Primary" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {primaryNav.map((group) => (
+          <li class="relative">
+            <button
+              type="button"
+              class="zow-nav-trigger flex items-center gap-1 rounded-md px-3 py-2 text-sm font-medium text-text-muted hover:text-text hover:bg-surface aria-expanded:text-text aria-expanded:bg-surface"
+              aria-expanded="false"
+            >
+              {group.label}
+              <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="transition-transform group-aria-expanded:rotate-180">
+                <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+              </svg>
+            </button>
+            <div class="zow-nav-panel invisible absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 translate-y-1 rounded-lg border border-border bg-bg-raised p-2 opacity-0 shadow-xl shadow-black/40 transition duration-150">
+              <a href={group.href} class="block rounded-md px-3 py-2 text-xs font-semibold uppercase tracking-wide text-accent hover:bg-surface">
+                {group.cta} →
+              </a>
+              <div class="my-1 h-px bg-border"></div>
+              {group.links.map((link) => (
+                <a href={link.href} class="block rounded-md px-3 py-2 hover:bg-surface">
+                  <span class="block text-sm font-medium text-text">{link.label}</span>
+                  {link.description && <span class="block text-xs text-text-faint">{link.description}</span>}
+                </a>
+              ))}
+            </div>
+          </li>
+        ))}
+        <li>
+          <a href="/pricing" class="block rounded-md px-3 py-2 text-sm font-medium text-text-muted hover:text-text hover:bg-surface">Pricing</a>
+        </li>
+        <li>
+          <a href="/company/about" class="block rounded-md px-3 py-2 text-sm font-medium text-text-muted hover:text-text hover:bg-surface">Company</a>
+        </li>
+      </ul>
+    </nav>
+
+    <div class="hidden items-center lg:flex">
+      <a
+        href="/get-started"
+        data-event="hero_primary_cta"
+        class="rounded-md bg-accent px-4 py-2 text-sm font-semibold text-[#04140b] hover:bg-accent-strong"
+      >
+        Get Started
+      </a>
+    </div>
+
+    <button
+      id="zow-mobile-toggle"
+      type="button"
+      class="lg:hidden inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-text"
+      aria-expanded="false"
+      aria-controls="zow-mobile-menu"
+      aria-label="Open menu"
+    >
+      <svg id="zow-icon-open" width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
+        <path d="M0 1H18M0 7H18M0 13H18" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+      <svg id="zow-icon-close" width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" class="hidden">
+        <path d="M1 1L15 15M15 1L1 15" stroke="currentColor" stroke-width="1.5" />
+      </svg>
+    </button>
+  </Container>
+</header>
+
+<div id="zow-mobile-menu" class="fixed inset-0 top-16 z-30 hidden overflow-y-auto bg-bg lg:hidden">
+  <Container class="flex flex-col gap-1 py-4">
+    {primaryNav.map((group) => (
+      <details class="group border-b border-border py-1">
+        <summary class="flex cursor-pointer list-none items-center justify-between py-2 text-base font-medium text-text">
+          {group.label}
+          <svg width="12" height="7" viewBox="0 0 10 6" fill="none" aria-hidden="true" class="transition-transform group-open:rotate-180">
+            <path d="M1 1L5 5L9 1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" />
+          </svg>
+        </summary>
+        <div class="flex flex-col gap-1 pb-3 pl-2">
+          {group.links.map((link) => (
+            <a href={link.href} class="rounded-md px-2 py-2 text-sm text-text-muted hover:bg-surface hover:text-text">{link.label}</a>
+          ))}
+        </div>
+      </details>
+    ))}
+    <a href="/pricing" class="border-b border-border py-3 text-base font-medium text-text">Pricing</a>
+    <a href="/company/about" class="border-b border-border py-3 text-base font-medium text-text">Company</a>
+
+    <div class="mt-4 flex flex-col gap-3">
+      <a href="/get-started" data-event="hero_primary_cta" class="rounded-md bg-accent px-4 py-3 text-center text-sm font-semibold text-[#04140b]">Get Started</a>
+    </div>
+  </Container>
+</div>
+
+<script>
+  const triggers = Array.from(document.querySelectorAll<HTMLButtonElement>('.zow-nav-trigger'));
+
+  function closeAll(except?: HTMLButtonElement) {
+    triggers.forEach((t) => {
+      if (t === except) return;
+      t.setAttribute('aria-expanded', 'false');
+      const panel = t.nextElementSibling as HTMLElement | null;
+      panel?.classList.add('invisible', 'opacity-0');
+    });
+  }
+
+  triggers.forEach((trigger) => {
+    const panel = trigger.nextElementSibling as HTMLElement | null;
+    const li = trigger.closest('li');
+
+    function open() {
+      closeAll(trigger);
+      trigger.setAttribute('aria-expanded', 'true');
+      panel?.classList.remove('invisible', 'opacity-0');
+    }
+    function close() {
+      trigger.setAttribute('aria-expanded', 'false');
+      panel?.classList.add('invisible', 'opacity-0');
+    }
+
+    trigger.addEventListener('click', () => {
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+      isOpen ? close() : open();
+    });
+    li?.addEventListener('mouseenter', open);
+    li?.addEventListener('mouseleave', close);
+    trigger.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        close();
+        trigger.blur();
+      }
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!(e.target as HTMLElement).closest('.zow-nav-trigger') && !(e.target as HTMLElement).closest('.zow-nav-panel')) {
+      closeAll();
+    }
+  });
+
+  const mobileToggle = document.getElementById('zow-mobile-toggle');
+  const mobileMenu = document.getElementById('zow-mobile-menu');
+  const iconOpen = document.getElementById('zow-icon-open');
+  const iconClose = document.getElementById('zow-icon-close');
+
+  mobileToggle?.addEventListener('click', () => {
+    const expanded = mobileToggle.getAttribute('aria-expanded') === 'true';
+    mobileToggle.setAttribute('aria-expanded', String(!expanded));
+    mobileMenu?.classList.toggle('hidden', expanded);
+    iconOpen?.classList.toggle('hidden', !expanded);
+    iconClose?.classList.toggle('hidden', expanded);
+    document.body.classList.toggle('overflow-hidden', !expanded);
+  });
+</script>

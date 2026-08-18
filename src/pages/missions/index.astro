@@ -1,0 +1,137 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import MissionCard from '../../components/MissionCard.astro';
+
+const missions = (await getCollection('missions', ({ data }) => data.status === 'published')).sort(
+  (a, b) => a.data.missionId.localeCompare(b.data.missionId)
+);
+
+const domains = Array.from(new Set(missions.flatMap((m) => m.data.domains))).sort();
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  itemListElement: missions.map((m, i) => ({
+    '@type': 'ListItem',
+    position: i + 1,
+    name: m.data.title,
+    url: `https://www.zoneofwar.com/missions/${m.id}`,
+  })),
+};
+---
+<BaseLayout
+  title="Drone Cybersecurity Mission Library | ZoneOfWar"
+  description="Browse hands-on drone cybersecurity missions for Red Team, Blue Team and team exercises across UAS software, communications and resilience."
+  jsonLd={jsonLd}
+>
+  <Hero
+    eyebrow="Mission Library"
+    headline="A mission library that evolves with the threat landscape."
+    body="Every ZoneOfWar mission is a reproducible environment with a story, objectives, evidence, scoring and defined learning outcomes."
+  />
+
+  <Section>
+    <div id="zow-mission-filters" class="mb-8 flex flex-wrap gap-3 rounded-md border border-border bg-surface p-4">
+      <select id="filter-role" class="rounded-md border border-border bg-bg-raised px-3 py-2 text-sm text-text">
+        <option value="">All roles</option>
+        <option value="red">Red Team</option>
+        <option value="blue">Blue Team</option>
+        <option value="red-blue">Red vs Blue</option>
+      </select>
+      <select id="filter-difficulty" class="rounded-md border border-border bg-bg-raised px-3 py-2 text-sm text-text">
+        <option value="">All levels</option>
+        <option value="foundation">Foundation</option>
+        <option value="practitioner">Practitioner</option>
+        <option value="advanced">Advanced</option>
+      </select>
+      <select id="filter-domain" class="rounded-md border border-border bg-bg-raised px-3 py-2 text-sm text-text">
+        <option value="">All domains</option>
+        {domains.map((d) => <option value={d}>{d}</option>)}
+      </select>
+      <select id="filter-mode" class="rounded-md border border-border bg-bg-raised px-3 py-2 text-sm text-text">
+        <option value="">All modes</option>
+        <option value="individual">Individual</option>
+        <option value="team">Team</option>
+        <option value="instructor-led">Instructor-led</option>
+      </select>
+      <button id="filter-reset" type="button" class="ml-auto rounded-md px-3 py-2 text-sm font-medium text-text-muted hover:text-text">Reset</button>
+    </div>
+
+    <p id="zow-mission-empty" class="hidden py-10 text-center text-sm text-text-muted">No missions match those filters yet.</p>
+
+    <div id="zow-mission-grid" class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {missions.map((mission) => (
+        <div
+          class="zow-mission-item"
+          data-role={mission.data.role}
+          data-difficulty={mission.data.difficulty}
+          data-domains={mission.data.domains.join(',')}
+          data-mode={mission.data.mode}
+        >
+          <MissionCard
+            slug={mission.id}
+            missionId={mission.data.missionId}
+            title={mission.data.title}
+            shortDescription={mission.data.shortDescription}
+            role={mission.data.role}
+            difficulty={mission.data.difficulty}
+            domains={mission.data.domains}
+            durationMinutes={mission.data.durationMinutes}
+            mode={mission.data.mode}
+            isFree={mission.data.isFree}
+          />
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 rounded-md border border-accent/30 bg-accent-soft px-6 py-8 text-center">
+      <p class="text-base font-semibold text-text">Create an account to launch missions and track your skill record.</p>
+      <a href="/signup" data-event="signup_start" class="mt-4 inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong">
+        Create Account to View Full Mission Catalog
+      </a>
+    </div>
+  </Section>
+</BaseLayout>
+
+<script>
+  const roleSel = document.getElementById('filter-role') as HTMLSelectElement;
+  const difficultySel = document.getElementById('filter-difficulty') as HTMLSelectElement;
+  const domainSel = document.getElementById('filter-domain') as HTMLSelectElement;
+  const modeSel = document.getElementById('filter-mode') as HTMLSelectElement;
+  const resetBtn = document.getElementById('filter-reset');
+  const items = Array.from(document.querySelectorAll<HTMLElement>('.zow-mission-item'));
+  const empty = document.getElementById('zow-mission-empty');
+
+  function applyFilters() {
+    let visibleCount = 0;
+    items.forEach((item) => {
+      const matchesRole = !roleSel.value || item.dataset.role === roleSel.value;
+      const matchesDifficulty = !difficultySel.value || item.dataset.difficulty === difficultySel.value;
+      const matchesDomain = !domainSel.value || item.dataset.domains?.split(',').includes(domainSel.value);
+      const matchesMode = !modeSel.value || item.dataset.mode === modeSel.value;
+      const visible = matchesRole && matchesDifficulty && matchesDomain && matchesMode;
+      item.style.display = visible ? '' : 'none';
+      if (visible) visibleCount++;
+    });
+    empty?.classList.toggle('hidden', visibleCount > 0);
+  }
+
+  [roleSel, difficultySel, domainSel, modeSel].forEach((sel) => sel.addEventListener('change', applyFilters));
+  resetBtn?.addEventListener('click', () => {
+    roleSel.value = '';
+    difficultySel.value = '';
+    domainSel.value = '';
+    modeSel.value = '';
+    applyFilters();
+  });
+
+  const params = new URLSearchParams(location.search);
+  const roleParam = params.get('role');
+  if (roleParam) {
+    roleSel.value = roleParam;
+    applyFilters();
+  }
+</script>

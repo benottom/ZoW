@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Section from '../components/Section.astro';
+---
+<BaseLayout title="Mission Not Found | ZoneOfWar" description="The page you're looking for doesn't exist." noindex>
+  <Section align="center">
+    <p class="font-mono text-xs uppercase tracking-[0.2em] text-accent">Error 404</p>
+    <h1 class="mt-4 text-3xl font-bold text-text sm:text-4xl">Signal lost.</h1>
+    <p class="mx-auto mt-3 max-w-md text-sm leading-relaxed text-text-muted">
+      This mission doesn't exist, or the coordinates have changed. Let's get you back on course.
+    </p>
+    <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+      <a href="/" class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong">Back to Home</a>
+      <a href="/missions" class="inline-flex items-center justify-center rounded-md border border-border bg-surface px-6 py-3 text-sm font-semibold text-text hover:bg-surface-hover">Browse Missions</a>
+    </div>
+  </Section>
+</BaseLayout>

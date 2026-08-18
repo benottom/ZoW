@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" fill="none">
+  <rect width="1200" height="630" fill="#0B111A"/>
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" stroke="#FFFFFF" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+    <radialGradient id="glow" cx="50%" cy="20%" r="60%">
+      <stop offset="0%" stop-color="#20E37A" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#20E37A" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#grid)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+
+  <circle cx="140" cy="140" r="46" stroke="#20E37A" stroke-width="1.6" opacity="0.5"/>
+  <circle cx="140" cy="140" r="26" stroke="#20E37A" stroke-width="1.6"/>
+  <circle cx="140" cy="140" r="8" fill="#20E37A"/>
+
+  <text x="100" y="330" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="#EEF3F8">ZONE<tspan fill="#20E37A">OF</tspan>WAR</text>
+  <text x="100" y="390" font-family="Arial, sans-serif" font-size="30" fill="#9FB0C3">The cyber range for drones and autonomous systems</text>
+
+  <g font-family="'Courier New', monospace" font-size="20" fill="#6D7F96">
+    <text x="100" y="470">ATTACK</text>
+    <text x="240" y="470">·</text>
+    <text x="270" y="470">DEFEND</text>
+    <text x="430" y="470">·</text>
+    <text x="460" y="470">BUILD RESILIENCE</text>
+  </g>
+</svg>

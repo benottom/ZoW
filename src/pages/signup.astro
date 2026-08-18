@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import LeadCaptureForm from '../components/LeadCaptureForm.astro';
+---
+<BaseLayout
+  title="Start a Free Mission | ZoneOfWar"
+  description="Request Early Access to ZoneOfWar and start your first drone cybersecurity mission."
+  noindex
+>
+  <Hero
+    eyebrow="Early Access"
+    headline="Start your first drone cyber mission."
+    body="ZoneOfWar accounts are opening in Early Access. Tell us a bit about you and we'll get you into the platform and your first free mission."
+  />
+
+  <Section containerClass="max-w-xl">
+    <LeadCaptureForm
+      formType="early-access"
+      analyticsEvent="signup_complete"
+      submitLabel="Request Early Access"
+      fields={[
+        { name: 'name', label: 'Name', required: true },
+        { name: 'email', label: 'Email', type: 'email', required: true },
+        { name: 'role', label: 'Role (e.g. SOC analyst, student, engineer)' },
+        {
+          name: 'skillLevel',
+          label: 'Skill level',
+          type: 'select',
+          options: ['New to cybersecurity', 'Practitioner', 'Advanced'],
+        },
+        {
+          name: 'accountType',
+          label: 'Individual or team',
+          type: 'select',
+          options: ['Individual', 'Team'],
+        },
+      ]}
+    />
+    <p class="mt-6 text-center text-sm text-text-muted">
+      Already requested access? <a href="/login" class="text-accent underline underline-offset-2">Check sign-in status</a>.
+      Looking to onboard a team instead? <a href="/get-started" class="text-accent underline underline-offset-2">See all ways to get started</a>.
+    </p>
+  </Section>
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('zow-form-early-access');
+  let started = false;
+  form?.addEventListener('focusin', () => {
+    if (started) return;
+    started = true;
+    (window as any).zowTrack?.('signup_start');
+  });
+</script>

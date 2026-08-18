@@ -1,0 +1,239 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import MissionConsole from '../components/MissionConsole.astro';
+import Section from '../components/Section.astro';
+import MissionCard from '../components/MissionCard.astro';
+import ArchitectureDiagram from '../components/ArchitectureDiagram.astro';
+import UseCaseCard from '../components/UseCaseCard.astro';
+import ScoreCard from '../components/ScoreCard.astro';
+import PricingCard from '../components/PricingCard.astro';
+import ResponsibleUseNotice from '../components/ResponsibleUseNotice.astro';
+import FeatureGrid from '../components/FeatureGrid.astro';
+import StepList from '../components/StepList.astro';
+import Badge from '../components/Badge.astro';
+import { solutions } from '../data/solutions';
+import { pricingPlans } from '../data/pricing';
+
+const allMissions = await getCollection('missions', ({ data }) => data.status === 'published');
+const featured = allMissions.filter((m) => m.data.isFeatured).slice(0, 4);
+
+const allBlog = await getCollection('blog');
+const latestArticles = allBlog.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()).slice(0, 3);
+
+const teaserPlans = pricingPlans.filter((p) => ['Explorer', 'Practitioner', 'Team'].includes(p.name));
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'ZoneOfWar',
+    url: 'https://www.zoneofwar.com',
+    logo: 'https://www.zoneofwar.com/favicon.svg',
+    parentOrganization: { '@type': 'Organization', name: 'Cyber Security Finland Oy' },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: 'ZoneOfWar Drone Cyber Range',
+    description:
+      'Hands-on drone cybersecurity training with realistic Red Team, Blue Team and Red vs Blue missions in isolated cyber-range environments.',
+    brand: { '@type': 'Brand', name: 'ZoneOfWar' },
+  },
+];
+---
+<BaseLayout
+  title="ZoneOfWar | Drone Cyber Range for Attack, Defense and Resilience"
+  description="Hands-on drone cybersecurity training with realistic Red Team, Blue Team and Red vs Blue missions in isolated cyber-range environments."
+  jsonLd={jsonLd}
+>
+  <Hero
+    split
+    eyebrow="Drone Cyber Range"
+    headline="Attack. Defend. Build resilient drones."
+    body="ZoneOfWar is a hands-on cyber range for unmanned and autonomous systems. Practice realistic attack and defense missions in isolated virtual environments, measure performance in real time, and move to controlled hardware labs when you're ready."
+    primaryCta={{ label: 'Start a Free Mission', href: '/signup', event: 'hero_primary_cta' }}
+    secondaryCta={{ label: 'Book a Demo', href: '/contact', event: 'hero_demo_cta' }}
+    trustLine="Built for authorized cybersecurity training, research and resilience testing."
+  >
+    <MissionConsole />
+  </Hero>
+
+  <div class="border-b border-border bg-bg-raised">
+    <div class="mx-auto max-w-6xl px-4 py-4 text-center text-sm text-text-muted sm:px-6 lg:px-8">
+      A cloud-native cyber range where teams learn to attack, defend and build resilience into drones and autonomous
+      systems through realistic, isolated and scored missions.
+    </div>
+  </div>
+
+  <Section align="center" containerClass="max-w-3xl">
+    <p class="text-balance text-2xl font-medium leading-snug text-text sm:text-3xl">
+      "Train for the cyber battles that happen before, during and after autonomous missions."
+    </p>
+  </Section>
+
+  <Section
+    tone="raised"
+    eyebrow="The Problem"
+    heading="Drones are cyber-physical systems, but most security teams train only on traditional IT."
+    body="Modern UAS combine flight controllers, embedded software, wireless communications, navigation, sensors, ground-control systems and cloud services. A weakness in any layer can affect confidentiality, mission integrity or safe operation. ZoneOfWar turns those risks into repeatable training missions where teams can learn without endangering real aircraft or public networks."
+  >
+    <FeatureGrid
+      columns={4}
+      features={[
+        { title: 'Drone & ground-control architecture', body: 'Understand how the components fit together and where trust breaks down.' },
+        { title: 'Telemetry & command-link security', body: 'Test the assumptions built into command-and-telemetry channels.' },
+        { title: 'Navigation & sensor integrity', body: 'Recognize abnormal positioning and sensor disagreement early.' },
+        { title: 'Embedded Linux & firmware', body: 'Investigate the companion computer and flight-controller stack.' },
+        { title: 'Wireless & protocol security', body: 'Work through commonly deployed UAS protocols and their weaknesses.' },
+        { title: 'Detection engineering', body: 'Build visibility into telemetry, network and system behavior.' },
+        { title: 'Incident response & recovery', body: 'Contain and recover without unnecessary mission failure.' },
+        { title: 'Resilient mission design', body: 'Design systems that degrade safely instead of failing outright.' },
+      ]}
+    />
+  </Section>
+
+  <Section eyebrow="Attack Surface" heading="One aircraft, five trust boundaries." body="Every layer of a UAS carries different assumptions about trust. ZoneOfWar missions are built around the boundaries between them.">
+    <ArchitectureDiagram
+      layers={[
+        { label: 'Flight Controller', description: 'Firmware and control loops closest to safe flight.' },
+        { label: 'Companion Computer', description: 'Embedded Linux running mission and autonomy logic.' },
+        { label: 'Command & Telemetry Link', description: 'The channel carrying instructions and status data.' },
+        { label: 'Navigation & Sensors', description: 'GNSS, inertial and sensor-fusion inputs.' },
+        { label: 'Ground Control & Cloud', description: 'Operator applications, fleet management and storage.' },
+      ]}
+    />
+  </Section>
+
+  <Section tone="raised" eyebrow="How It Works" heading="Five steps from sign-up to skill record.">
+    <StepList
+      steps={[
+        { body: 'Launch an isolated mission environment.' },
+        { body: 'Choose Red Team, Blue Team or Red vs Blue mode.' },
+        { body: 'Work against mission objectives, not multiple-choice questions.' },
+        { body: 'Receive live scoring across detection, containment, integrity and mission outcome.' },
+        { body: 'Review evidence, timeline and skill gaps in the after-action report.' },
+      ]}
+    />
+  </Section>
+
+  <Section
+    eyebrow="Featured Missions"
+    heading="Realistic missions, not multiple choice."
+    body="Every ZoneOfWar mission is a reproducible environment with a story, objectives, evidence, scoring and defined learning outcomes."
+  >
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+      {featured.map((mission) => (
+        <MissionCard
+          slug={mission.id}
+          missionId={mission.data.missionId}
+          title={mission.data.title}
+          shortDescription={mission.data.shortDescription}
+          role={mission.data.role}
+          difficulty={mission.data.difficulty}
+          domains={mission.data.domains}
+          durationMinutes={mission.data.durationMinutes}
+          mode={mission.data.mode}
+          isFree={mission.data.isFree}
+        />
+      ))}
+    </div>
+    <div class="mt-8">
+      <a href="/missions" data-event="mission_card_open" class="text-sm font-semibold text-accent hover:underline">Browse the full Mission Library →</a>
+    </div>
+  </Section>
+
+  <Section tone="raised" eyebrow="Choose Your Mode" heading="Red Team. Blue Team. Red vs Blue.">
+    <div class="grid grid-cols-1 gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-3">
+      <div class="border-l-2 border-danger bg-bg p-6">
+        <Badge variant="danger">Red Team</Badge>
+        <h3 class="mt-3 text-base font-semibold text-text">Learn the attack surface by working inside it.</h3>
+        <p class="mt-2 text-sm leading-relaxed text-text-muted">Understand how weaknesses are discovered and exploited inside authorized sandbox missions.</p>
+        <a href="/ranges/attack" class="mt-4 inline-block text-sm font-semibold text-danger hover:underline">Explore the Attack Range →</a>
+      </div>
+      <div class="border-l-2 border-defense bg-bg p-6">
+        <Badge variant="defense">Blue Team</Badge>
+        <h3 class="mt-3 text-base font-semibold text-text">Defend the mission, not just the endpoint.</h3>
+        <p class="mt-2 text-sm leading-relaxed text-text-muted">Harden systems, detect anomalies, investigate evidence and maintain mission resilience.</p>
+        <a href="/ranges/defense" class="mt-4 inline-block text-sm font-semibold text-defense hover:underline">Explore the Defense Range →</a>
+      </div>
+      <div class="border-l-2 border-warning bg-bg p-6">
+        <Badge variant="warning">Red vs Blue</Badge>
+        <h3 class="mt-3 text-base font-semibold text-text">Two teams. One mission. Live consequences.</h3>
+        <p class="mt-2 text-sm leading-relaxed text-text-muted">Simultaneous adversary and defender exercise with a shared mission outcome.</p>
+        <a href="/ranges/red-vs-blue" class="mt-4 inline-block text-sm font-semibold text-warning hover:underline">Explore Red vs Blue →</a>
+      </div>
+    </div>
+  </Section>
+
+  <Section eyebrow="Live Scoring" heading="Measure mission readiness, not course completion." body="Every mission generates evidence about how a person or team performed under pressure.">
+    <div class="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
+      <ScoreCard
+        outcome="Safe Recovery"
+        metrics={[
+          { label: 'Detection', value: 91 },
+          { label: 'Containment', value: 78 },
+          { label: 'Mission Integrity', value: 86 },
+          { label: 'Evidence Quality', value: 94 },
+        ]}
+        timeToDetect="02:14"
+        recommendedNext="Fleet SOC 021"
+      />
+      <div>
+        <p class="text-sm leading-relaxed text-text-muted">
+          The after-action report shows the event timeline, actions taken, missed signals, detected behaviors, mission
+          outcome, score breakdown and recommended next labs — so progress is measured by performance, not seat time.
+        </p>
+        <a href="/platform/scoring" data-event="sample_report_download" class="mt-4 inline-block text-sm font-semibold text-accent hover:underline">See a Sample After-Action Report →</a>
+      </div>
+    </div>
+  </Section>
+
+  <Section tone="raised" eyebrow="Solutions" heading="Built for practitioners, teams, universities and product security.">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {solutions.map((s) => (
+        <UseCaseCard title={s.title} body={s.heroBody} href={`/solutions/${s.slug}`} />
+      ))}
+    </div>
+  </Section>
+
+  <Section eyebrow="Platform" heading="Simulation, cyber, mission and evidence — working together." containerClass="max-w-2xl" align="center">
+    <div class="text-center">
+      <a href="/platform/architecture" class="text-sm font-semibold text-accent hover:underline">See the full architecture →</a>
+    </div>
+  </Section>
+
+  <ResponsibleUseNotice variant="strip" />
+
+  <Section eyebrow="Pricing" heading="Start in the cloud. Scale to private ranges.">
+    <div class="grid grid-cols-1 gap-5 md:grid-cols-3">
+      {teaserPlans.map((plan) => <PricingCard {...plan} />)}
+    </div>
+    <div class="mt-8 text-center">
+      <a href="/pricing" class="text-sm font-semibold text-accent hover:underline">Compare all plans →</a>
+    </div>
+  </Section>
+
+  <Section tone="raised" eyebrow="Resources" heading="Research and threat intelligence for UAS defenders.">
+    <div class="divide-hairline">
+      {latestArticles.map((post) => (
+        <a href={`/resources/blog/${post.id}`} class="grid grid-cols-1 gap-2 py-5 first:pt-0 sm:grid-cols-[140px_1fr] sm:gap-6 sm:py-6">
+          <span class="font-mono text-xs uppercase tracking-wide text-text-faint">{post.data.category}</span>
+          <div>
+            <h3 class="text-base font-semibold text-text group-hover:text-accent">{post.data.title}</h3>
+            <p class="mt-1.5 text-sm leading-relaxed text-text-muted">{post.data.summary}</p>
+          </div>
+        </a>
+      ))}
+    </div>
+  </Section>
+
+  <Section align="center" containerClass="max-w-2xl">
+    <h2 class="text-balance text-3xl font-bold tracking-tight text-text sm:text-4xl">Your first drone cyber mission can start in minutes.</h2>
+    <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
+      <a href="/signup" data-event="hero_primary_cta" class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong">Start a Free Mission</a>
+      <a href="/contact" data-event="hero_demo_cta" class="inline-flex items-center justify-center rounded-md border border-border px-6 py-3 text-sm font-semibold text-text hover:bg-surface">Talk to the Team</a>
+    </div>
+  </Section>
+</BaseLayout>

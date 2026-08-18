@@ -1,0 +1,24 @@
+---
+interface Props {
+  variant?: 'accent' | 'danger' | 'defense' | 'warning' | 'neutral';
+  class?: string;
+}
+const { variant = 'neutral', class: className = '' } = Astro.props;
+
+const variants: Record<string, string> = {
+  accent: 'text-accent border-accent/30',
+  danger: 'text-danger border-danger/30',
+  defense: 'text-defense border-defense/30',
+  warning: 'text-warning border-warning/30',
+  neutral: 'text-text-faint border-border',
+};
+---
+<span
+  class:list={[
+    'inline-flex items-center gap-1.5 rounded-sm border px-1.5 py-0.5 font-mono text-[10px] font-medium uppercase tracking-wide',
+    variants[variant],
+    className,
+  ]}
+>
+  <slot />
+</span>

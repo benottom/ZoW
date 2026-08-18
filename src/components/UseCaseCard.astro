@@ -1,0 +1,18 @@
+---
+interface Props {
+  title: string;
+  body: string;
+  href: string;
+}
+const { title, body, href } = Astro.props;
+---
+<a
+  href={href}
+  class="group flex flex-col justify-between rounded-md border border-border bg-surface p-5 transition hover:border-accent/40 hover:bg-surface-hover"
+>
+  <div>
+    <h3 class="text-base font-semibold text-text">{title}</h3>
+    <p class="mt-2 text-sm leading-relaxed text-text-muted">{body}</p>
+  </div>
+  <span class="mt-4 text-sm font-semibold text-accent group-hover:underline">Learn more →</span>
+</a>

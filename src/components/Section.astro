@@ -1,0 +1,27 @@
+---
+import Container from './Container.astro';
+import Kicker from './Kicker.astro';
+interface Props {
+  eyebrow?: string;
+  heading?: string;
+  body?: string;
+  align?: 'left' | 'center';
+  class?: string;
+  containerClass?: string;
+  id?: string;
+  tone?: 'base' | 'raised';
+}
+const { eyebrow, heading, body, align = 'left', class: className = '', containerClass = '', id, tone = 'base' } = Astro.props;
+---
+<section id={id} class:list={['py-16 sm:py-20', tone === 'raised' ? 'bg-bg-raised' : '', className]}>
+  <Container class={containerClass}>
+    {(eyebrow || heading || body) && (
+      <div class:list={['mb-10 max-w-xl', align === 'center' ? 'mx-auto text-center' : '']}>
+        {eyebrow && <Kicker class={align === 'center' ? 'justify-center' : ''}>{eyebrow}</Kicker>}
+        {heading && <h2 class="mt-3 text-balance text-2xl font-bold leading-tight tracking-tight text-text sm:text-[1.85rem]">{heading}</h2>}
+        {body && <p class="mt-3 text-balance text-[0.95rem] leading-relaxed text-text-muted">{body}</p>}
+      </div>
+    )}
+    <slot />
+  </Container>
+</section>

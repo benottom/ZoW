@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import LeadCaptureForm from '../../components/LeadCaptureForm.astro';
+import CheckList from '../../components/CheckList.astro';
+import { solutions } from '../../data/solutions';
+
+export async function getStaticPaths() {
+  return solutions.map((solution) => ({ params: { slug: solution.slug }, props: { solution } }));
+}
+
+const { solution } = Astro.props;
+const isAcademic = solution.slug === 'academia';
+---
+<BaseLayout title={solution.seoTitle} description={solution.metaDescription}>
+  <Hero
+    eyebrow={`Solutions · ${solution.title}`}
+    headline={solution.heroHeadline}
+    body={solution.heroBody}
+    primaryCta={{ label: solution.ctaLabel, href: '#request', event: 'demo_form_start' }}
+  />
+
+  <Section eyebrow="What You Can Do" heading={`Built for ${solution.audience}.`}>
+    <CheckList items={solution.capabilities} />
+  </Section>
+
+  <Section tone="raised" eyebrow="Recommended Package" heading="What's included.">
+    <p class="max-w-2xl border-l-2 border-accent py-1 pl-5 text-sm leading-relaxed text-text-muted">
+      {solution.recommendedPackage}
+    </p>
+  </Section>
+
+  <Section id="request" eyebrow="Get Started" heading={solution.ctaLabel} containerClass="max-w-xl">
+    {isAcademic ? (
+      <LeadCaptureForm
+        formType="academic"
+        analyticsEvent="academic_form_submit"
+        submitLabel={solution.ctaLabel}
+        fields={[
+          { name: 'name', label: 'Instructor name', required: true },
+          { name: 'email', label: 'Work email', type: 'email', required: true },
+          { name: 'institution', label: 'Institution', required: true },
+          { name: 'program', label: 'Course / program', required: true },
+          { name: 'expectedStudents', label: 'Expected students' },
+          { name: 'semester', label: 'Semester / start date' },
+          { name: 'desiredTopics', label: 'Desired topics', type: 'textarea', full: true },
+        ]}
+      />
+    ) : (
+      <LeadCaptureForm
+        formType="demo"
+        analyticsEvent="demo_form_submit"
+        submitLabel={solution.ctaLabel}
+        withConsent
+        fields={[
+          { name: 'name', label: 'Name', required: true },
+          { name: 'email', label: 'Work email', type: 'email', required: true },
+          { name: 'organization', label: 'Organization', required: true },
+          { name: 'teamSize', label: 'Team size' },
+          { name: 'message', label: 'What are you trying to train for?', type: 'textarea', full: true },
+        ]}
+      />
+    )}
+  </Section>
+</BaseLayout>

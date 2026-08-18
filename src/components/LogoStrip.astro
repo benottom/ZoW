@@ -1,0 +1,20 @@
+---
+// Hidden until genuine, approved customer/partner logos exist.
+// Per the build spec: never fabricate or imply customer logos, certifications,
+// or user counts. Populate `logos` with real, approved assets before rendering.
+interface Logo {
+  name: string;
+  src: string;
+}
+interface Props {
+  logos?: Logo[];
+}
+const { logos = [] } = Astro.props;
+---
+{logos.length > 0 && (
+  <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 opacity-80 grayscale">
+    {logos.map((logo) => (
+      <img src={logo.src} alt={logo.name} class="h-7 w-auto object-contain" loading="lazy" />
+    ))}
+  </div>
+)}

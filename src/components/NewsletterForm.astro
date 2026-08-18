@@ -1,0 +1,77 @@
+---
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+const id = 'zow-newsletter';
+---
+<form id={id} class:list={['flex flex-col gap-3', compact ? 'sm:flex-row' : '']} data-event-submit="newsletter_signup" novalidate>
+  <input type="hidden" class="zow-rendered-at" name="renderedAt" value="" />
+  <div class="hidden" aria-hidden="true">
+    <label for={`${id}-website`}>Leave this field empty</label>
+    <input id={`${id}-website`} type="text" name="website" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <label for={`${id}-email`} class="sr-only">Email address</label>
+  <input
+    id={`${id}-email`}
+    name="email"
+    type="email"
+    required
+    placeholder="you@organization.com"
+    class="w-full min-w-0 flex-1 rounded-md border border-border bg-bg-raised px-3 py-2.5 text-sm text-text placeholder:text-text-faint focus-visible:border-accent"
+  />
+  <button
+    type="submit"
+    class="inline-flex shrink-0 items-center justify-center rounded-md bg-accent px-5 py-2.5 text-sm font-semibold text-[#04140b] hover:bg-accent-strong disabled:opacity-60"
+  >
+    Subscribe
+  </button>
+
+  <div class="basis-full">
+    <label class="flex items-start gap-2 text-xs text-text-faint">
+      <input name="consent" type="checkbox" required class="mt-0.5 h-3.5 w-3.5 rounded border-border bg-bg-raised" />
+      I agree to receive the Autonomous Security Brief newsletter and accept the Privacy Policy.
+    </label>
+    <p class="zow-nl-error mt-2 hidden text-xs text-danger" role="alert"></p>
+    <p class="zow-nl-success mt-2 hidden text-xs text-accent" role="status">Subscribed — check your inbox to confirm.</p>
+  </div>
+</form>
+
+<script>
+  const forms = document.querySelectorAll<HTMLFormElement>('#zow-newsletter');
+  forms.forEach((form) => {
+    const renderedAtInput = form.querySelector<HTMLInputElement>('.zow-rendered-at');
+    if (renderedAtInput) renderedAtInput.value = String(Date.now());
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const errorEl = form.querySelector<HTMLElement>('.zow-nl-error');
+      const successEl = form.querySelector<HTMLElement>('.zow-nl-success');
+      const submitBtn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+      errorEl?.classList.add('hidden');
+
+      submitBtn?.setAttribute('disabled', 'true');
+      try {
+        const res = await fetch('/api/newsletter', { method: 'POST', body: new FormData(form) });
+        const data = await res.json();
+        if (!res.ok || !data.ok) {
+          if (errorEl) {
+            errorEl.textContent = Object.values(data.errors ?? {})[0] as string || 'Please check your email and try again.';
+            errorEl.classList.remove('hidden');
+          }
+          return;
+        }
+        form.reset();
+        successEl?.classList.remove('hidden');
+      } catch {
+        if (errorEl) {
+          errorEl.textContent = 'Something went wrong. Please try again.';
+          errorEl.classList.remove('hidden');
+        }
+      } finally {
+        submitBtn?.removeAttribute('disabled');
+      }
+    });
+  });
+</script>

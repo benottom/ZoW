@@ -1,0 +1,50 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+import LeadCaptureForm from '../components/LeadCaptureForm.astro';
+
+const partnerTypes = [
+  { title: 'Technology partners', body: 'Simulation, SDR, flight-controller and security-tooling vendors integrating with ZoneOfWar.' },
+  { title: 'Academic partners', body: 'Universities and research programs building curriculum or research collaborations around the range.' },
+  { title: 'Channel & reseller partners', body: 'Organizations helping bring ZoneOfWar to defense, critical-infrastructure and enterprise customers in their region.' },
+];
+---
+<BaseLayout
+  title="Partners | ZoneOfWar"
+  description="Partner with ZoneOfWar on technology integrations, academic collaboration or regional distribution for drone cybersecurity training."
+>
+  <Hero eyebrow="Company" headline="Build the drone cyber range ecosystem with us." body="We work with technology vendors, universities and channel partners who share our focus on authorized, isolated, resilience-first UAS security training." />
+
+  <Section eyebrow="Partner Types" heading="Ways to work with ZoneOfWar.">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-3">
+      {partnerTypes.map((p) => (
+        <div class="rounded-md border border-border bg-surface p-5">
+          <h3 class="text-base font-semibold text-text">{p.title}</h3>
+          <p class="mt-2 text-sm leading-relaxed text-text-muted">{p.body}</p>
+        </div>
+      ))}
+    </div>
+  </Section>
+
+  <Section eyebrow="Get in Touch" heading="Tell us about your organization." containerClass="max-w-xl">
+    <LeadCaptureForm
+      formType="demo"
+      analyticsEvent="demo_form_submit"
+      submitLabel="Submit Partnership Inquiry"
+      withConsent
+      fields={[
+        { name: 'name', label: 'Name', required: true },
+        { name: 'email', label: 'Work email', type: 'email', required: true },
+        { name: 'organization', label: 'Organization', required: true },
+        {
+          name: 'useCase',
+          label: 'Partnership type',
+          type: 'select',
+          options: ['Technology partner', 'Academic partner', 'Channel / reseller', 'Other'],
+        },
+        { name: 'message', label: 'Message', type: 'textarea', full: true },
+      ]}
+    />
+  </Section>
+</BaseLayout>

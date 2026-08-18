@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Hero from '../../components/Hero.astro';
+import Section from '../../components/Section.astro';
+import ScoreCard from '../../components/ScoreCard.astro';
+import FeatureGrid from '../../components/FeatureGrid.astro';
+---
+<BaseLayout
+  title="Drone Cyber Range Scoring & Analytics | ZoneOfWar"
+  description="Measure detection, containment, integrity, resilience and mission outcomes with ZoneOfWar live scoring and after-action analytics."
+>
+  <Hero
+    eyebrow="Live Scoring & Analytics"
+    headline="Measure mission readiness, not course completion."
+    body="Every mission generates evidence about how a person or team performed under pressure."
+    primaryCta={{ label: 'See a Sample Report', href: '#sample-report', event: 'sample_report_download' }}
+  />
+
+  <Section eyebrow="Scoring Dimensions" heading="Eight dimensions, one mission outcome.">
+    <FeatureGrid
+      columns={4}
+      features={[
+        { title: 'Mission availability', body: 'Was the mission objective still achievable throughout the exercise?' },
+        { title: 'Command & telemetry integrity', body: 'Was the link trustworthy, and was tampering detected?' },
+        { title: 'Time to detect', body: 'How quickly was the anomaly or intrusion identified?' },
+        { title: 'Time to contain', body: 'How quickly was the issue contained without over-reacting?' },
+        { title: 'Evidence quality', body: 'Was the investigation documented well enough to act on?' },
+        { title: 'Defensive coverage', body: 'Were the right systems monitored and protected?' },
+        { title: 'Recovery effectiveness', body: 'Did the response restore safe, resilient operation?' },
+        { title: 'Objective completion', body: 'Was the underlying mission objective actually met?' },
+      ]}
+    />
+  </Section>
+
+  <Section id="sample-report" eyebrow="After-Action Report" heading="One report. The full story." body="A single report shows the event timeline, actions taken, missed signals, detected behaviors, mission outcome, score breakdown and recommended next labs.">
+    <div class="mx-auto max-w-md">
+      <ScoreCard
+        outcome="Safe Recovery"
+        metrics={[
+          { label: 'Detection', value: 91 },
+          { label: 'Containment', value: 78 },
+          { label: 'Mission Integrity', value: 86 },
+          { label: 'Evidence Quality', value: 94 },
+        ]}
+        timeToDetect="02:14"
+        recommendedNext="Fleet SOC 021"
+      />
+      <p class="mt-4 text-center text-xs text-text-faint">Sample after-action report — illustrative scoring from a completed mission.</p>
+    </div>
+  </Section>
+
+  <Section eyebrow="Team Analytics" heading="Visibility without exposing sensitive data." body="Managers see capability by person, team, mission family and skill domain. Individuals see progress without exposing sensitive enterprise data.">
+    <div class="text-center">
+      <a href="/contact" data-event="hero_demo_cta" class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-[#04140b] hover:bg-accent-strong">
+        See a Sample After-Action Report
+      </a>
+    </div>
+  </Section>
+</BaseLayout>

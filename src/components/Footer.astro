@@ -1,0 +1,46 @@
+---
+import Container from './Container.astro';
+import { footerNav } from '../data/nav';
+
+const columns = [
+  { title: 'Product', links: footerNav.product },
+  { title: 'Solutions', links: footerNav.solutions },
+  { title: 'Resources', links: footerNav.resources },
+  { title: 'Company', links: footerNav.company },
+  { title: 'Trust', links: footerNav.trust },
+];
+---
+<footer class="border-t border-border bg-bg-raised">
+  <Container class="py-12">
+    <div class="grid grid-cols-2 gap-8 sm:grid-cols-3 lg:grid-cols-6">
+      <div class="col-span-2 sm:col-span-3 lg:col-span-1">
+        <a href="/" class="flex items-center gap-2" aria-label="ZoneOfWar home">
+          <span class="h-2.5 w-2.5 rounded-full bg-accent"></span>
+          <span class="font-mono text-base font-semibold text-text">ZONE<span class="text-accent">OF</span>WAR</span>
+        </a>
+        <p class="mt-3 text-sm text-text-faint">The cyber range for drones and autonomous systems.</p>
+      </div>
+      {columns.map((col) => (
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-wide text-text-faint">{col.title}</h3>
+          <ul class="mt-3 space-y-2">
+            {col.links.map((link) => (
+              <li><a href={link.href} class="text-sm text-text-muted hover:text-text">{link.label}</a></li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-10 border-t border-border pt-6">
+      <p class="max-w-3xl text-xs leading-relaxed text-text-faint">
+        ZoneOfWar is a Cyber Security Finland Oy product. Training environments are isolated and intended for
+        authorized security education, validation and resilience testing.
+      </p>
+      <div class="mt-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <p class="text-xs text-text-faint">© {new Date().getFullYear()} Cyber Security Finland Oy. All rights reserved.</p>
+        <a href="mailto:security@zoneofwar.com" class="text-xs text-text-muted hover:text-text">security@zoneofwar.com</a>
+      </div>
+    </div>
+  </Container>
+</footer>

@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Section from '../components/Section.astro';
+
+const sections = [
+  {
+    title: 'Getting Started',
+    items: ['Creating an account', 'Launching your first mission', 'Understanding mission modes (Red / Blue / Red vs Blue)'],
+  },
+  {
+    title: 'Rules of Engagement',
+    items: ['What is and isn\'t allowed inside a mission', 'Team exercise conduct', 'Reporting a problem during a live exercise'],
+  },
+  {
+    title: 'Lab Prerequisites',
+    items: ['Browser and connectivity requirements', 'Recommended prior learning paths', 'Advanced / hardware lab approval process'],
+  },
+  {
+    title: 'Scoring & Reports',
+    items: ['How mission scores are calculated', 'Reading an after-action report', 'Exporting reports for your team'],
+  },
+  {
+    title: 'Team & Instructor Console',
+    items: ['Creating a cohort', 'Launching a mission for a team', 'Injecting events and observing live exercises'],
+  },
+  {
+    title: 'Admin',
+    items: ['Seats and roles', 'SSO configuration (SAML / OIDC)', 'Data retention settings'],
+  },
+];
+---
+<BaseLayout
+  title="Documentation | ZoneOfWar"
+  description="Platform help, rules of engagement and lab prerequisites for the ZoneOfWar drone cyber range."
+>
+  <Hero eyebrow="Resources" headline="Documentation" body="Platform help, rules of engagement and lab prerequisites for getting the most out of ZoneOfWar." />
+
+  <Section>
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      {sections.map((section) => (
+        <div class="rounded-md border border-border bg-surface p-5">
+          <h2 class="text-base font-semibold text-text">{section.title}</h2>
+          <ul class="mt-3 space-y-2">
+            {section.items.map((item) => (
+              <li class="text-sm text-text-muted">{item}</li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+    <p class="mt-8 text-center text-sm text-text-muted">
+      Full step-by-step documentation unlocks inside your account. Have a question now?
+      <a href="/contact" class="text-accent underline underline-offset-2">Contact the team</a>.
+    </p>
+  </Section>
+</BaseLayout>

@@ -1,0 +1,60 @@
+---
+import Badge from './Badge.astro';
+
+interface Props {
+  slug: string;
+  missionId: string;
+  title: string;
+  shortDescription: string;
+  role: 'red' | 'blue' | 'red-blue';
+  difficulty: 'foundation' | 'practitioner' | 'advanced';
+  domains: string[];
+  durationMinutes: number;
+  mode: string;
+  isFree?: boolean;
+  analyticsEvent?: string;
+}
+
+const { slug, missionId, title, shortDescription, role, difficulty, domains, durationMinutes, mode, isFree, analyticsEvent = 'mission_card_open' } = Astro.props;
+
+const roleMeta = {
+  red: { label: 'Red Team', variant: 'danger' as const },
+  blue: { label: 'Blue Team', variant: 'defense' as const },
+  'red-blue': { label: 'Red vs Blue', variant: 'warning' as const },
+};
+---
+<article class="group flex h-full flex-col rounded-md border border-border bg-surface p-5 transition hover:border-accent/40">
+  <div class="flex items-center justify-between gap-2">
+    <span class="font-mono text-xs text-text-faint">{missionId}</span>
+    {isFree && <Badge variant="accent">Free</Badge>}
+  </div>
+
+  <h3 class="mt-3 text-lg font-semibold text-text">{title}</h3>
+
+  <div class="mt-2 flex flex-wrap items-center gap-2 font-mono text-xs uppercase tracking-wide text-text-faint">
+    <Badge variant={roleMeta[role].variant}>{roleMeta[role].label}</Badge>
+    <span>{difficulty}</span>
+    <span aria-hidden="true">·</span>
+    <span>{durationMinutes} min</span>
+  </div>
+
+  <p class="mt-3 flex-1 text-sm leading-relaxed text-text-muted">{shortDescription}</p>
+
+  <div class="mt-4 flex flex-wrap gap-1.5">
+    {domains.map((d) => (
+      <span class="rounded-sm border border-border px-1.5 py-0.5 text-[11px] text-text-faint">{d}</span>
+    ))}
+  </div>
+
+  <div class="mt-4 flex items-center justify-between border-t border-border pt-4">
+    <span class="text-xs text-text-faint capitalize">{mode.replace('-', ' ')}</span>
+    <a
+      href={`/missions/${slug}`}
+      data-event={analyticsEvent}
+      data-event-props={JSON.stringify({ mission: slug })}
+      class="text-sm font-semibold text-accent hover:underline"
+    >
+      View Mission →
+    </a>
+  </div>
+</article>
