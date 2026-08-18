@@ -18,10 +18,29 @@ const taxonomy = [
   'Supply chain and updates',
   'Human and operational factors',
 ];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Drone Threat Library',
+  hasPart: topics.map((t) => ({
+    '@type': 'Article',
+    headline: t.data.title,
+    url: `https://www.zoneofwar.com/resources/threat-library/${t.id}`,
+  })),
+};
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Resources', href: '/resources/threat-library' },
+  { name: 'Threat Library', href: '/resources/threat-library' },
+];
 ---
 <BaseLayout
-  title="Drone Cybersecurity Threat Library | ZoneOfWar"
+  title="Drone Cybersecurity Threat Library"
   description="Explore UAS cybersecurity risks across firmware, communications, navigation, sensors, applications and supporting infrastructure."
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <Hero
     eyebrow="Resources"

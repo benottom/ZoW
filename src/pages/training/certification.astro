@@ -11,8 +11,15 @@ const certs = [
   { code: 'ZOW-202', name: 'UAS Blue Team Defender' },
   { code: 'ZOW-301', name: 'UAS Cyber Range Operator' },
 ];
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Training', href: '/training' },
+  { name: 'Certification', href: '/training/certification' },
+];
 ---
 <BaseLayout
+  breadcrumbs={breadcrumbs}
   title="Drone Cybersecurity Certification | ZoneOfWar"
   description="Validate practical drone cybersecurity skills through hands-on missions and performance-based ZoneOfWar assessments."
 >

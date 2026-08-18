@@ -32,8 +32,19 @@ const jsonLd = {
   description: mission.data.shortDescription,
   provider: { '@type': 'Organization', name: 'ZoneOfWar', sameAs: 'https://www.zoneofwar.com' },
 };
+
+const metaDescription =
+  mission.data.shortDescription.length > 155
+    ? `${mission.data.shortDescription.slice(0, 154).replace(/\s+\S*$/, '')}…`
+    : mission.data.shortDescription;
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Missions', href: '/missions' },
+  { name: mission.data.title, href: `/missions/${mission.id}` },
+];
 ---
-<BaseLayout title={`${mission.data.title} | ZoneOfWar Missions`} description={mission.data.shortDescription} jsonLd={jsonLd}>
+<BaseLayout title={mission.data.title} description={metaDescription} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
   <Section containerClass="max-w-3xl">
     <div class="flex flex-wrap items-center gap-2">
       <span class="font-mono text-xs text-text-faint">{mission.data.missionId}</span>

@@ -26,8 +26,16 @@ const jsonLd = {
   datePublished: post.data.publishedAt.toISOString(),
   author: { '@type': 'Person', name: post.data.author },
 };
+
+const sectionLabel = post.data.category === 'research' ? 'Research' : 'Blog';
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Resources', href: '/resources/blog' },
+  { name: sectionLabel, href: post.data.category === 'research' ? '/resources/research' : '/resources/blog' },
+  { name: post.data.title, href: `/resources/blog/${post.id}` },
+];
 ---
-<BaseLayout title={`${post.data.title} | ZoneOfWar ${post.data.category === 'research' ? 'Research' : 'Blog'}`} description={post.data.seoDescription} jsonLd={jsonLd}>
+<BaseLayout title={post.data.title} description={post.data.seoDescription} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
   <Section containerClass="max-w-3xl">
     <Badge variant={post.data.category === 'research' ? 'defense' : 'neutral'}>{post.data.category}</Badge>
     <h1 class="mt-4 text-3xl font-bold text-text sm:text-4xl">{post.data.title}</h1>

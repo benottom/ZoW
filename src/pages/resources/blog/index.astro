@@ -8,10 +8,29 @@ import NewsletterForm from '../../../components/NewsletterForm.astro';
 const posts = (await getCollection('blog')).sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf());
 
 const dateFmt = new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'ZoneOfWar Blog',
+  hasPart: posts.map((p) => ({
+    '@type': 'Article',
+    headline: p.data.title,
+    url: `https://www.zoneofwar.com/resources/blog/${p.id}`,
+  })),
+};
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Resources', href: '/resources/blog' },
+  { name: 'Blog', href: '/resources/blog' },
+];
 ---
 <BaseLayout
   title="ZoneOfWar Blog | Drone Cybersecurity Insights"
   description="Practical drone and autonomous-systems cybersecurity insights from the ZoneOfWar team."
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <Hero eyebrow="Resources" headline="Blog" body="Practical drone and autonomous-systems cybersecurity insights, written for defenders and product-security teams." />
 

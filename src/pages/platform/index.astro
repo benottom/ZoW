@@ -4,10 +4,15 @@ import Hero from '../../components/Hero.astro';
 import Section from '../../components/Section.astro';
 import FeatureGrid from '../../components/FeatureGrid.astro';
 import Badge from '../../components/Badge.astro';
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Platform', href: '/platform' },
+];
 ---
 <BaseLayout
   title="Drone Cyber Range Platform | ZoneOfWar"
   description="Explore ZoneOfWar architecture, Red/Blue modes, mission orchestration, live scoring and deployment options for drone cybersecurity training."
+  breadcrumbs={breadcrumbs}
 >
   <Hero
     eyebrow="Platform"

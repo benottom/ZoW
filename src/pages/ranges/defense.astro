@@ -8,10 +8,17 @@ import CheckList from '../../components/CheckList.astro';
 import MissionCard from '../../components/MissionCard.astro';
 
 const missions = (await getCollection('missions', ({ data }) => data.role === 'blue' && data.status === 'published')).slice(0, 4);
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Cyber Ranges', href: '/ranges/attack' },
+  { name: 'Defense Range', href: '/ranges/defense' },
+];
 ---
 <BaseLayout
   title="Drone Blue Team Cyber Range | ZoneOfWar"
   description="Train UAS defenders to detect, contain and recover from drone cybersecurity incidents with realistic hands-on missions."
+  breadcrumbs={breadcrumbs}
 >
   <Hero
     eyebrow="Drone Defense Range"

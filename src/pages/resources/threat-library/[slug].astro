@@ -26,8 +26,15 @@ const jsonLd = {
   datePublished: topic.data.publishedAt.toISOString(),
   author: { '@type': 'Organization', name: 'ZoneOfWar' },
 };
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Resources', href: '/resources/threat-library' },
+  { name: 'Threat Library', href: '/resources/threat-library' },
+  { name: topic.data.title, href: `/resources/threat-library/${topic.id}` },
+];
 ---
-<BaseLayout title={`${topic.data.title} | Drone Threat Library`} description={topic.data.seoDescription} jsonLd={jsonLd}>
+<BaseLayout title={topic.data.title} description={topic.data.seoDescription} jsonLd={jsonLd} breadcrumbs={breadcrumbs}>
   <Section containerClass="max-w-3xl">
     <Badge>{topic.data.category}</Badge>
     <h1 class="mt-4 text-3xl font-bold text-text sm:text-4xl">{topic.data.title}</h1>

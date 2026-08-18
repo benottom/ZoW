@@ -12,10 +12,15 @@ const paths = [
   { name: 'UAS Product Security Engineer', level: 'Advanced', hours: '20-25 hrs', audience: 'Engineering & product security' },
   { name: 'Autonomous Systems Security Lead', level: 'Advanced', hours: '25-30 hrs', audience: 'Team leads & managers' },
 ];
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Training', href: '/training' },
+];
 ---
 <BaseLayout
   title="Drone Cybersecurity Training | ZoneOfWar"
   description="Hands-on drone cybersecurity learning paths with guided labs, scored missions and practical skill validation."
+  breadcrumbs={breadcrumbs}
 >
   <Hero
     eyebrow="Training"

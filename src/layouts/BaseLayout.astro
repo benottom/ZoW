@@ -5,21 +5,53 @@ import Footer from '../components/Footer.astro';
 import Analytics from '../components/Analytics.astro';
 import ConsentBanner from '../components/ConsentBanner.astro';
 
+interface Breadcrumb {
+  name: string;
+  href: string;
+}
+
 interface Props {
   title: string;
   description: string;
   jsonLd?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
+  breadcrumbs?: Breadcrumb[];
 }
 
-const { title, description, jsonLd, noindex = false } = Astro.props;
+const { title, description, jsonLd, noindex = false, breadcrumbs } = Astro.props;
 
 const siteName = 'ZoneOfWar';
 const fullTitle = title.includes(siteName) ? title : `${title} | ${siteName}`;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL('/og-default.svg', Astro.site);
 
-const jsonLdList = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const siteJsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: siteName,
+    url: 'https://www.zoneofwar.com/',
+    publisher: { '@type': 'Organization', name: siteName },
+  },
+];
+
+const breadcrumbJsonLd = breadcrumbs
+  ? [
+      {
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: breadcrumbs.map((b, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          name: b.name,
+          item: new URL(b.href, Astro.site).toString(),
+        })),
+      },
+    ]
+  : [];
+
+const pageJsonLd = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
+const jsonLdList = [...siteJsonLd, ...breadcrumbJsonLd, ...pageJsonLd];
 ---
 <!doctype html>
 <html lang="en">

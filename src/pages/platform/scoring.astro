@@ -4,10 +4,16 @@ import Hero from '../../components/Hero.astro';
 import Section from '../../components/Section.astro';
 import ScoreCard from '../../components/ScoreCard.astro';
 import FeatureGrid from '../../components/FeatureGrid.astro';
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Platform', href: '/platform' },
+  { name: 'Live Scoring', href: '/platform/scoring' },
+];
 ---
 <BaseLayout
-  title="Drone Cyber Range Scoring & Analytics | ZoneOfWar"
+  title="Live Scoring & Analytics"
   description="Measure detection, containment, integrity, resilience and mission outcomes with ZoneOfWar live scoring and after-action analytics."
+  breadcrumbs={breadcrumbs}
 >
   <Hero
     eyebrow="Live Scoring & Analytics"

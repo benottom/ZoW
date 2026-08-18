@@ -11,10 +11,27 @@ const pricingFaq = [
   { question: 'Are prices final?', answer: 'Pricing shown here is Early Access / starting-from pricing while the platform and packaging are still being validated. Team, Academic and Enterprise pricing is confirmed during a scoping call.' },
   { question: 'Do you offer academic discounts?', answer: 'Yes — the Academic plan is a dedicated annual license for universities and research programs. Request access from the Universities & Research page.' },
 ];
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: pricingFaq.map((f) => ({
+    '@type': 'Question',
+    name: f.question,
+    acceptedAnswer: { '@type': 'Answer', text: f.answer },
+  })),
+};
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Pricing', href: '/pricing' },
+];
 ---
 <BaseLayout
   title="ZoneOfWar Pricing | Drone Cyber Range Plans"
   description="Compare ZoneOfWar individual, team, academic and enterprise plans for hands-on drone cybersecurity training."
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <Hero
     eyebrow="Pricing"

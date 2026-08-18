@@ -9,10 +9,17 @@ import MissionCard from '../../components/MissionCard.astro';
 import ResponsibleUseNotice from '../../components/ResponsibleUseNotice.astro';
 
 const missions = (await getCollection('missions', ({ data }) => data.role === 'red' && data.status === 'published')).slice(0, 4);
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Cyber Ranges', href: '/ranges/attack' },
+  { name: 'Attack Range', href: '/ranges/attack' },
+];
 ---
 <BaseLayout
   title="Drone Red Team Cyber Range | ZoneOfWar"
   description="Practice authorized UAS Red Team missions covering drone software, communications, navigation and embedded security in isolated environments."
+  breadcrumbs={breadcrumbs}
 >
   <Hero
     eyebrow="Drone Attack Range"

@@ -21,11 +21,16 @@ const jsonLd = {
     url: `https://www.zoneofwar.com/missions/${m.id}`,
   })),
 };
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Missions', href: '/missions' },
+];
 ---
 <BaseLayout
   title="Drone Cybersecurity Mission Library | ZoneOfWar"
   description="Browse hands-on drone cybersecurity missions for Red Team, Blue Team and team exercises across UAS software, communications and resilience."
   jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <Hero
     eyebrow="Mission Library"

@@ -4,10 +4,16 @@ import Hero from '../../components/Hero.astro';
 import Section from '../../components/Section.astro';
 import ArchitectureDiagram from '../../components/ArchitectureDiagram.astro';
 import FeatureGrid from '../../components/FeatureGrid.astro';
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Platform', href: '/platform' },
+  { name: 'Architecture', href: '/platform/architecture' },
+];
 ---
 <BaseLayout
-  title="ZoneOfWar Architecture | Cloud and Hardware Drone Cyber Range"
+  title="Architecture | Cloud & Hardware Cyber Range"
   description="See how ZoneOfWar combines simulation, isolated cyber environments, scoring and optional hardware-in-the-loop for UAS security training."
+  breadcrumbs={breadcrumbs}
 >
   <Hero
     eyebrow="Architecture"

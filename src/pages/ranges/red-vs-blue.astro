@@ -4,10 +4,16 @@ import Hero from '../../components/Hero.astro';
 import Section from '../../components/Section.astro';
 import FeatureGrid from '../../components/FeatureGrid.astro';
 import StepList from '../../components/StepList.astro';
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Cyber Ranges', href: '/ranges/attack' },
+  { name: 'Red vs Blue', href: '/ranges/red-vs-blue' },
+];
 ---
 <BaseLayout
   title="Drone Red vs Blue Cyber Range | ZoneOfWar"
   description="Run multi-user UAS Red Team vs Blue Team missions with shared objectives, live scoring and structured after-action review."
+  breadcrumbs={breadcrumbs}
 >
   <Hero
     eyebrow="Red vs Blue"

@@ -8,10 +8,29 @@ const posts = (await getCollection('blog', ({ data }) => data.category === 'rese
   (a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()
 );
 const dateFmt = new Intl.DateTimeFormat('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'ZoneOfWar Research',
+  hasPart: posts.map((p) => ({
+    '@type': 'Article',
+    headline: p.data.title,
+    url: `https://www.zoneofwar.com/resources/blog/${p.id}`,
+  })),
+};
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Resources', href: '/resources/blog' },
+  { name: 'Research', href: '/resources/research' },
+];
 ---
 <BaseLayout
   title="Research | ZoneOfWar"
   description="Research-oriented explainers on drone and autonomous-systems cybersecurity from the ZoneOfWar team."
+  jsonLd={jsonLd}
+  breadcrumbs={breadcrumbs}
 >
   <Hero eyebrow="Resources" headline="Research" body="Longer-form explainers on drone and autonomous-systems cybersecurity, resilience and cyber-range design." />
 

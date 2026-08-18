@@ -12,8 +12,14 @@ export async function getStaticPaths() {
 
 const { solution } = Astro.props;
 const isAcademic = solution.slug === 'academia';
+
+const breadcrumbs = [
+  { name: 'Home', href: '/' },
+  { name: 'Solutions', href: '/solutions/cyber-teams' },
+  { name: solution.title, href: `/solutions/${solution.slug}` },
+];
 ---
-<BaseLayout title={solution.seoTitle} description={solution.metaDescription}>
+<BaseLayout title={solution.seoTitle} description={solution.metaDescription} breadcrumbs={breadcrumbs}>
   <Hero
     eyebrow={`Solutions · ${solution.title}`}
     headline={solution.heroHeadline}
