@@ -1,9 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import MissionConsole from '../components/MissionConsole.astro';
 import Section from '../components/Section.astro';
+import droneDuskWater from '../assets/images/drone-dusk-water.jpg';
 import MissionCard from '../components/MissionCard.astro';
 import ArchitectureDiagram from '../components/ArchitectureDiagram.astro';
 import UseCaseCard from '../components/UseCaseCard.astro';
@@ -58,7 +59,19 @@ const jsonLd = [
     secondaryCta={{ label: 'Book a Demo', href: '/contact', event: 'hero_demo_cta' }}
     trustLine="Built for authorized cybersecurity training, research and resilience testing."
   >
-    <MissionConsole />
+    <div class="relative">
+      <Image
+        src={droneDuskWater}
+        alt="A drone hovering low over still water at dusk, with a city skyline faint on the horizon"
+        width={900}
+        height={1125}
+        class="aspect-[4/5] w-full rounded-md border border-border object-cover shadow-xl"
+        loading="eager"
+      />
+      <div class="absolute bottom-0 left-0 right-0 rounded-b-md bg-gradient-to-t from-black/70 to-transparent p-4 pt-10">
+        <p class="font-mono text-[11px] tracking-wide text-white/80">FIELD TEST · ISOLATED ENVIRONMENT</p>
+      </div>
+    </div>
   </Hero>
 
   <div class="border-b border-border bg-bg-raised">
