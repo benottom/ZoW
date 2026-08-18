@@ -1,28 +1,34 @@
 ---
 // A custom, brand-specific graphic for the homepage hero — a stylised
 // mission telemetry readout — instead of a generic gradient/glow panel.
+//
+// EXPERIMENT NOTE: colors here are hardcoded rather than theme tokens.
+// This panel is meant to stay a fixed dark "terminal" contrast panel
+// regardless of the surrounding page theme (light or dark) — the same
+// role redshielddefense.com's black "THREAT-OPS / LIVE-FEED" panel plays
+// against their white page.
 ---
 <div class="relative mx-auto w-full max-w-md font-mono text-xs">
-  <div class="rounded-lg border border-border bg-bg-raised shadow-2xl shadow-black/40">
-    <div class="flex items-center justify-between border-b border-border px-4 py-2.5">
+  <div class="rounded-lg border border-white/10 bg-black shadow-2xl shadow-black/40">
+    <div class="flex items-center justify-between border-b border-white/10 px-4 py-2.5">
       <div class="flex items-center gap-2">
-        <span class="h-1.5 w-1.5 rounded-full bg-danger/70"></span>
-        <span class="h-1.5 w-1.5 rounded-full bg-warning/70"></span>
-        <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+        <span class="h-1.5 w-1.5 rounded-full bg-[#ff4d4d]/70"></span>
+        <span class="h-1.5 w-1.5 rounded-full bg-[#f0b84b]/70"></span>
+        <span class="h-1.5 w-1.5 rounded-full bg-[#22c55e]"></span>
       </div>
-      <span class="text-[10px] tracking-[0.15em] text-text-faint">MISSION 014 · LIVE</span>
+      <span class="text-[10px] tracking-[0.15em] text-white/40">MISSION 014 · LIVE</span>
     </div>
 
     <div class="space-y-4 p-4">
       <div class="flex items-center justify-between">
-        <span class="text-text-faint">MODE</span>
-        <span class="rounded-sm bg-defense-soft px-1.5 py-0.5 text-defense">BLUE TEAM</span>
+        <span class="text-white/40">MODE</span>
+        <span class="rounded-sm bg-[#0369a1]/20 px-1.5 py-0.5 text-[#38bdf8]">BLUE TEAM</span>
       </div>
 
       <div>
-        <div class="flex items-center justify-between text-text-faint">
+        <div class="flex items-center justify-between text-white/40">
           <span>TELEMETRY LINK</span>
-          <span class="text-warning">DEGRADED</span>
+          <span class="text-[#f0b84b]">DEGRADED</span>
         </div>
         <svg viewBox="0 0 300 46" class="mt-2 h-10 w-full overflow-visible" preserveAspectRatio="none" aria-hidden="true">
           <polyline
@@ -35,30 +41,30 @@
         </svg>
       </div>
 
-      <dl class="grid grid-cols-3 gap-3 border-t border-border pt-3">
+      <dl class="grid grid-cols-3 gap-3 border-t border-white/10 pt-3">
         <div>
-          <dt class="text-text-faint">DETECT</dt>
-          <dd class="mt-1 text-base text-text">02:14</dd>
+          <dt class="text-white/40">DETECT</dt>
+          <dd class="mt-1 text-base text-white">02:14</dd>
         </div>
         <div>
-          <dt class="text-text-faint">INTEGRITY</dt>
-          <dd class="mt-1 text-base text-accent">86%</dd>
+          <dt class="text-white/40">INTEGRITY</dt>
+          <dd class="mt-1 text-base text-[#22c55e]">86%</dd>
         </div>
         <div>
-          <dt class="text-text-faint">STATUS</dt>
-          <dd class="mt-1 text-base text-text">ACTIVE</dd>
+          <dt class="text-white/40">STATUS</dt>
+          <dd class="mt-1 text-base text-white">ACTIVE</dd>
         </div>
       </dl>
 
-      <div class="space-y-1.5 border-t border-border pt-3 text-[11px] text-text-faint">
-        <p><span class="text-accent">›</span> anomaly flagged — position drift 4.2m</p>
-        <p><span class="text-accent">›</span> fallback navigation engaged</p>
-        <p class="text-text">
-          <span class="text-accent">›</span> awaiting operator response<span class="animate-pulse-slow">_</span>
+      <div class="space-y-1.5 border-t border-white/10 pt-3 text-[11px] text-white/40">
+        <p><span class="text-[#ff4d4d]">›</span> anomaly flagged — position drift 4.2m</p>
+        <p><span class="text-[#ff4d4d]">›</span> fallback navigation engaged</p>
+        <p class="text-white">
+          <span class="text-[#ff4d4d]">›</span> awaiting operator response<span class="animate-pulse-slow">_</span>
         </p>
       </div>
     </div>
   </div>
 
-  <div class="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-lg border border-border/60 sm:-bottom-5 sm:-right-5"></div>
+  <div class="absolute -bottom-4 -right-4 -z-10 h-full w-full rounded-lg border border-black/10 sm:-bottom-5 sm:-right-5"></div>
 </div>

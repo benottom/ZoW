@@ -11,7 +11,7 @@ const { name, audience, priceLabel, billing, features, cta, highlighted, notes }
   ]}
 >
   {highlighted && (
-    <span class="mb-3 inline-flex w-fit items-center rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wide text-[#04140b]">
+    <span class="mb-3 inline-flex w-fit items-center rounded-full bg-accent px-2.5 py-1 font-mono text-[10px] font-semibold uppercase tracking-wide text-white">
       Most popular
     </span>
   )}
@@ -39,7 +39,7 @@ const { name, audience, priceLabel, billing, features, cta, highlighted, notes }
     data-event-props={JSON.stringify({ plan: name })}
     class:list={[
       'mt-6 inline-flex items-center justify-center rounded-md px-4 py-2.5 text-sm font-semibold',
-      highlighted ? 'bg-accent text-[#04140b] hover:bg-accent-strong' : 'border border-border bg-bg-raised text-text hover:bg-surface-hover',
+      highlighted ? 'bg-accent text-white hover:bg-accent-strong' : 'border border-border bg-bg-raised text-text hover:bg-surface-hover',
     ]}
   >
     {cta.label}

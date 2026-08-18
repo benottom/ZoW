@@ -1,48 +1,55 @@
 @import "tailwindcss";
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/600.css";
-@import "@fontsource/inter/700.css";
+@import "@fontsource/lexend/400.css";
+@import "@fontsource/lexend/500.css";
+@import "@fontsource/lexend/600.css";
+@import "@fontsource/lexend/700.css";
 @import "@fontsource/jetbrains-mono/400.css";
 @import "@fontsource/jetbrains-mono/500.css";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Lexend", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
 
-  /* Core surfaces */
-  --color-bg: #0b111a;
-  --color-bg-raised: #0f1622;
-  --color-surface: #162233;
-  --color-surface-hover: #1c2c42;
-  --color-border: #253347;
-  --color-border-strong: #34486539;
+  /* Core surfaces — EXPERIMENT: light theme adapted from redshielddefense.com */
+  --color-bg: #ffffff;
+  --color-bg-raised: #fafafa;
+  --color-surface: #f5f5f5;
+  --color-surface-hover: #ececec;
+  --color-border: #e5e5e5;
+  --color-border-strong: #d4d4d4;
 
   /* Text */
-  --color-text: #eef3f8;
-  --color-text-muted: #9fb0c3;
-  --color-text-faint: #6d7f96;
+  --color-text: #171717;
+  --color-text-muted: #6b7280;
+  --color-text-faint: #9ca3af;
 
-  /* Accents */
-  --color-accent: #20e37a;
-  --color-accent-strong: #17c469;
-  --color-accent-soft: #20e37a1a;
+  /* Accents — brand red replaces ZoneOfWar green for this experiment */
+  --color-accent: #ff0000;
+  --color-accent-strong: #cc0000;
+  --color-accent-soft: #ff00000d;
 
-  --color-danger: #ff4d67;
-  --color-danger-soft: #ff4d671a;
+  /* Red Team is intentionally a darker, distinct red so it doesn't read
+     as the brand accent — see note in the redshield-experiment writeup. */
+  --color-danger: #991b1b;
+  --color-danger-soft: #991b1b0d;
 
-  --color-defense: #40a9ff;
-  --color-defense-soft: #40a9ff1a;
+  --color-defense: #0369a1;
+  --color-defense-soft: #0369a10d;
 
-  --color-warning: #f0b84b;
-  --color-warning-soft: #f0b84b1a;
+  --color-warning: #b45309;
+  --color-warning-soft: #b453090d;
+
+  /* Positive/success metrics — kept independent of --color-accent now that
+     accent is brand red, so "good score" never visually reads as "alert". */
+  --color-success: #15803d;
+  --color-success-soft: #15803d0d;
 
   --animate-scanline: scanline 8s linear infinite;
   --animate-pulse-slow: pulse-slow 3s ease-in-out infinite;
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
 }
 
@@ -69,7 +76,7 @@ body {
 
 ::selection {
   background-color: var(--color-accent);
-  color: #04140b;
+  color: #ffffff;
 }
 
 :focus-visible {
@@ -88,13 +95,13 @@ body {
 
 .bg-grid {
   background-image:
-    linear-gradient(to right, #ffffff06 1px, transparent 1px),
-    linear-gradient(to bottom, #ffffff06 1px, transparent 1px);
+    linear-gradient(to right, #00000008 1px, transparent 1px),
+    linear-gradient(to bottom, #00000008 1px, transparent 1px);
   background-size: 44px 44px;
 }
 
 .bg-radial-fade {
-  background: radial-gradient(50% 65% at 100% 0%, #20e37a12 0%, transparent 70%);
+  background: radial-gradient(50% 65% at 100% 0%, #ff00000d 0%, transparent 70%);
 }
 
 .hairline {
@@ -131,7 +138,7 @@ body {
   top: 0;
   z-index: 100;
   background: var(--color-accent);
-  color: #04140b;
+  color: #ffffff;
   padding: 0.75rem 1.25rem;
   font-weight: 600;
   border-radius: 0 0 0.5rem 0;
@@ -150,7 +157,7 @@ body {
 .prose-zow h2 {
   color: var(--color-text);
   font-size: 1.375rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-top: 2.5rem;
   margin-bottom: 0.75rem;
 }
@@ -158,7 +165,7 @@ body {
 .prose-zow h3 {
   color: var(--color-text);
   font-size: 1.125rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-top: 1.75rem;
   margin-bottom: 0.5rem;
 }
