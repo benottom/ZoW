@@ -13,7 +13,7 @@ learningOutcomes:
   - "Recognize where weak authentication assumptions live"
   - "Recommend mitigations a defender or engineer can act on"
 prerequisites: []
-isFree: true
+isFree: false
 isFeatured: false
 status: "published"
 ---

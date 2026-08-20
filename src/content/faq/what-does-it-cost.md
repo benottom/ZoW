@@ -4,4 +4,4 @@ category: "Pricing"
 order: 10
 ---
 
-There is a free Explorer account with limited rotating missions. Paid Practitioner and Team plans unlock the full mission library, learning paths and analytics. Academic and Enterprise pricing is custom — see the Pricing page for current details.
+ZoneOfWar is sold to organizations, not individuals, across three plans: Academic, Corporate and Government. Each is custom-priced to your institution and deployment model — see the Pricing page or talk to us for details.

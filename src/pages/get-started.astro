@@ -5,26 +5,18 @@ import Kicker from '../components/Kicker.astro';
 
 const paths = [
   {
-    label: 'Individual',
-    title: 'Start a free mission',
-    body: 'Explore the platform on your own. Launch a foundation mission, get a live score and see the after-action report — no card required.',
-    cta: 'Start a Free Mission',
-    href: '/signup',
-    event: 'hero_primary_cta',
-    primary: true,
-  },
-  {
     label: 'Team or organization',
     title: 'Book a demo',
     body: 'See a live walkthrough and talk through team pilots, private deployment, academic access or enterprise pricing with the team.',
     cta: 'Book a Demo',
     href: '/contact',
     event: 'demo_form_start',
+    primary: true,
   },
   {
     label: 'Returning user',
     title: 'Sign in',
-    body: 'Already requested access or have an account? Head to sign-in to pick up where you left off.',
+    body: 'Already onboarded your organization? Head to sign-in to pick up where you left off.',
     cta: 'Sign In',
     href: '/login',
     event: 'login_click',
@@ -33,7 +25,7 @@ const paths = [
 ---
 <BaseLayout
   title="Get Started | ZoneOfWar"
-  description="Start a free drone cybersecurity mission, book a team demo, or sign in to your existing ZoneOfWar account."
+  description="Book a team demo or sign in to your existing ZoneOfWar account."
 >
   <Section align="center" containerClass="max-w-2xl">
     <Kicker class="justify-center">Get Started</Kicker>
@@ -44,9 +36,9 @@ const paths = [
   </Section>
 
   <Section containerClass="max-w-5xl" class="!pt-0">
-    <div class="grid grid-cols-1 gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-3">
+    <div class="grid grid-cols-1 gap-px overflow-hidden rounded-md border border-border bg-border md:grid-cols-2">
       {paths.map((path) => (
-        <div class:list={['flex flex-col bg-bg p-6', path.primary ? 'border-t-2 border-accent md:border-t-0 md:border-l-2' : '']}>
+        <div class:list={['flex flex-col bg-bg p-6', path.primary ? 'border-t-2 border-accent' : '']}>
           <span class="font-mono text-[11px] font-semibold uppercase tracking-[0.15em] text-text-faint">{path.label}</span>
           <h2 class="mt-3 text-lg font-semibold text-text">{path.title}</h2>
           <p class="mt-2 flex-1 text-sm leading-relaxed text-text-muted">{path.body}</p>

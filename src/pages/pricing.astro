@@ -7,8 +7,8 @@ import FaqAccordion from '../components/FaqAccordion.astro';
 import { pricingPlans } from '../data/pricing';
 
 const pricingFaq = [
-  { question: 'Can I switch plans later?', answer: 'Yes. You can upgrade from Explorer or Practitioner to a Team, Academic or Enterprise plan at any time — talk to us and we\'ll help you move your account.' },
-  { question: 'Are prices final?', answer: 'Pricing shown here is Early Access / starting-from pricing while the platform and packaging are still being validated. Team, Academic and Enterprise pricing is confirmed during a scoping call.' },
+  { question: 'Which plan is right for us?', answer: 'It depends on your institution type. Universities and research programs fall under Academic; contractors, enterprises and industry partners under Corporate; ministries of defense, military branches and agencies under Government. Talk to us if you\'re not sure where you fit.' },
+  { question: 'How is pricing determined?', answer: 'Pricing is scoped to your institution type, deployment model and mission requirements — a university license, a corporate enterprise contract, and a government contract vehicle are each structured differently. Talk to us for a plan tailored to your organization.' },
   { question: 'Do you offer academic discounts?', answer: 'Yes — the Academic plan is a dedicated annual license for universities and research programs. Request access from the Universities & Research page.' },
 ];
 
@@ -29,24 +29,41 @@ const breadcrumbs = [
 ---
 <BaseLayout
   title="ZoneOfWar Pricing | Drone Cyber Range Plans"
-  description="Compare ZoneOfWar individual, team, academic and enterprise plans for hands-on drone cybersecurity training."
+  description="Compare ZoneOfWar plans for universities, corporate industry partners and government agencies."
   jsonLd={jsonLd}
   breadcrumbs={breadcrumbs}
 >
   <Hero
     eyebrow="Pricing"
-    headline="Start in the cloud. Scale to private ranges."
-    body="Keep public pricing simple for individuals and teams. Use custom pricing for enterprise, government, academic licensing and hardware labs."
-    primaryCta={{ label: 'Start Free', href: '/signup', event: 'hero_primary_cta' }}
-    secondaryCta={{ label: 'Request Team Pricing', href: '/contact', event: 'demo_form_start' }}
+    headline="Built for institutions. Scaled to private deployments."
+    body="Plans for universities, corporate industry partners and government agencies. Every plan is scoped to your organization during onboarding."
+    primaryCta={{ label: 'Book a Demo', href: '/contact', event: 'hero_primary_cta' }}
+    secondaryCta={{ label: 'Explore Missions', href: '/missions', event: 'hero_demo_cta' }}
   />
 
+  <Section eyebrow="Built For Institutions" heading="Three ways organizations work with us.">
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-3">
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-accent">Universities</h3>
+        <p class="mt-2 text-sm leading-relaxed text-text-muted">Enabling secure, collaborative defense research and technology transfer for academic consortia.</p>
+      </div>
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-accent">Corporate</h3>
+        <p class="mt-2 text-sm leading-relaxed text-text-muted">Accelerating defense innovation and compliance for prime contractors and industry partners.</p>
+      </div>
+      <div>
+        <h3 class="text-sm font-semibold uppercase tracking-wide text-accent">Government</h3>
+        <p class="mt-2 text-sm leading-relaxed text-text-muted">Delivering mission-ready, interoperable solutions for defense and security agencies.</p>
+      </div>
+    </div>
+  </Section>
+
   <Section>
-    <div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-5 sm:grid-cols-3">
       {pricingPlans.map((plan) => <PricingCard {...plan} />)}
     </div>
     <p class="mt-6 text-center text-xs text-text-faint">
-      Prices shown are Early Access / starting-from estimates. Final packaging and enterprise pricing are confirmed during onboarding.
+      Plans are scoped to your institution and use case. Talk to us to get pricing tailored to your organization.
     </p>
   </Section>
 

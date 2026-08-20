@@ -23,7 +23,7 @@ const featured = allMissions.filter((m) => m.data.isFeatured).slice(0, 4);
 const allBlog = await getCollection('blog');
 const latestArticles = allBlog.sort((a, b) => b.data.publishedAt.valueOf() - a.data.publishedAt.valueOf()).slice(0, 3);
 
-const teaserPlans = pricingPlans.filter((p) => ['Explorer', 'Practitioner', 'Team'].includes(p.name));
+const teaserPlans = pricingPlans;
 
 const jsonLd = [
   {
@@ -55,8 +55,8 @@ const jsonLd = [
     headline="Attack. Defend. Build resilient drones."
     headlineHtml="Attack. Defend. Build <span class='text-accent'>resilient drones</span>."
     body="ZoneOfWar is a hands-on cyber range for unmanned and autonomous systems. Practice realistic attack and defense missions in isolated virtual environments, measure performance in real time, and move to controlled hardware labs when you're ready."
-    primaryCta={{ label: 'Start a Free Mission', href: '/signup', event: 'hero_primary_cta' }}
-    secondaryCta={{ label: 'Book a Demo', href: '/contact', event: 'hero_demo_cta' }}
+    primaryCta={{ label: 'Book a Demo', href: '/contact', event: 'hero_primary_cta' }}
+    secondaryCta={{ label: 'Explore Missions', href: '/missions', event: 'hero_demo_cta' }}
     trustLine="Built for authorized cybersecurity training, research and resilience testing."
   >
     <div class="relative">
@@ -244,9 +244,9 @@ const jsonLd = [
   </Section>
 
   <Section align="center" containerClass="max-w-2xl">
-    <h2 class="text-balance text-3xl font-bold tracking-tight text-text sm:text-4xl">Your first drone cyber mission can start in minutes.</h2>
+    <h2 class="text-balance text-3xl font-bold tracking-tight text-text sm:text-4xl">Bring ZoneOfWar to your team in weeks, not quarters.</h2>
     <div class="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-      <a href="/signup" data-event="hero_primary_cta" class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-white hover:bg-accent-strong">Start a Free Mission</a>
+      <a href="/contact" data-event="hero_primary_cta" class="inline-flex items-center justify-center rounded-md bg-accent px-6 py-3 text-sm font-semibold text-white hover:bg-accent-strong">Book a Demo</a>
       <a href="/contact" data-event="hero_demo_cta" class="inline-flex items-center justify-center rounded-md border border-border px-6 py-3 text-sm font-semibold text-text hover:bg-surface">Talk to the Team</a>
     </div>
   </Section>

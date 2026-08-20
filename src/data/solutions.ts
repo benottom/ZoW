@@ -15,13 +15,13 @@ export const solutions: SolutionPage[] = [
   {
     slug: 'defense',
     title: 'Defense & Public Safety',
-    audience: 'Security leaders, training commands, public safety',
+    audience: 'Ministries of Defense, military branches, and government agencies',
     seoTitle: 'Defense & Public Safety Drone Cyber Range | ZoneOfWar',
     metaDescription:
-      'ZoneOfWar hands-on drone cybersecurity range for security leaders, training commands, public safety.',
-    heroHeadline: 'Drone cyber readiness for defense & public safety.',
+      'ZoneOfWar hands-on drone cybersecurity range for Ministries of Defense, military branches, and government agencies.',
+    heroHeadline: 'Mission-ready, interoperable drone cyber readiness for defense & government.',
     heroBody:
-      'Prepare teams for cyber and cyber-physical risks involving unmanned systems. Use private exercises, instructor control, after-action evidence and custom mission development.',
+      'Delivering mission-ready, interoperable solutions for defense and security agencies. Prepare teams for cyber and cyber-physical risks involving unmanned systems, with private exercises, instructor control, after-action evidence and custom mission development.',
     capabilities: [
       'Run role-based practical missions',
       'Measure team performance',
@@ -57,13 +57,13 @@ export const solutions: SolutionPage[] = [
   {
     slug: 'manufacturers',
     title: 'Drone Manufacturers',
-    audience: 'UAS OEMs, component vendors, software providers',
+    audience: 'Defense contractors, large enterprises, and industry partners in the defense supply chain',
     seoTitle: 'Drone Manufacturers Drone Cyber Range | ZoneOfWar',
     metaDescription:
-      'ZoneOfWar hands-on drone cybersecurity range for UAS OEMs, component vendors, software providers.',
-    heroHeadline: 'Drone cyber readiness for drone manufacturers.',
+      'ZoneOfWar hands-on drone cybersecurity range for defense contractors, large enterprises, and industry partners in the defense supply chain.',
+    heroHeadline: 'Accelerating defense innovation and compliance for industry partners.',
     heroBody:
-      'Give product-security and engineering teams a repeatable environment for security validation, regression exercises and secure-design training across the UAS stack.',
+      'Accelerating defense innovation and compliance for prime contractors and industry partners. Give product-security and engineering teams a repeatable environment for security validation, regression exercises and secure-design training across the UAS stack.',
     capabilities: [
       'Run role-based practical missions',
       'Measure team performance',
@@ -78,13 +78,13 @@ export const solutions: SolutionPage[] = [
   {
     slug: 'academia',
     title: 'Universities & Research',
-    audience: 'Universities, applied science programs, research labs',
+    audience: 'Academic institutions, research centers, and university-affiliated organizations',
     seoTitle: 'Universities & Research Drone Cyber Range | ZoneOfWar',
     metaDescription:
-      'ZoneOfWar hands-on drone cybersecurity range for universities, applied science programs, research labs.',
-    heroHeadline: 'Drone cyber readiness for universities & research.',
+      'ZoneOfWar hands-on drone cybersecurity range for academic institutions, research centers, and university-affiliated organizations.',
+    heroHeadline: 'Enabling secure, collaborative defense research for academic consortia.',
     heroBody:
-      'Provide students and researchers with resettable UAS cyber labs, instructor-led exercises, class cohorts and measurable practical assignments.',
+      'Enabling secure, collaborative defense research and technology transfer for academic consortia. Provide students and researchers with resettable UAS cyber labs, instructor-led exercises, class cohorts and measurable practical assignments.',
     capabilities: [
       'Run role-based practical missions',
       'Measure team performance',

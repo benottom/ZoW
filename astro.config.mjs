@@ -17,7 +17,7 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      filter: (page) => !page.includes('/login') && !page.includes('/signup'),
+      filter: (page) => !page.includes('/login'),
     }),
   ],
   adapter: vercel()
